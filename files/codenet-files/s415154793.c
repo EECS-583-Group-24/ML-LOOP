@@ -1,0 +1,1 @@
+main(a,b){for(;~scanf("%d%d",&a,&b);printf("%d\n",sprintf((char*)&a,"%d",a+b)));div();}
