@@ -11,7 +11,7 @@ def delete_compiled_files(input_file):
     output_dir = os.path.join(current_dir, "output", os.path.splitext(input_file)[0])
     # Check if the output directory exists before attempting to delete files
     if os.path.exists(output_dir):
-        compiled_files = [f for f in os.listdir(output_dir) if f.endswith(".ll")]
+        compiled_files = [f for f in os.listdir(output_dir)]
         for file in compiled_files:
             file_path = os.path.join(output_dir, file)
             if os.path.exists(file_path):

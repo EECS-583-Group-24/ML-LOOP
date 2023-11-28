@@ -36,6 +36,19 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     # Execute the opt command and place the output file in the directory
     subprocess.run(f"opt {opt_flags} {non_optimized_file} -o {optimized_file}", shell=True)
     
+    # Formulate the output executable file path
+    executable_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_permutations.index(opt_sequence)+1}")
+    # Compile the optimized LLVM IR file into an executable
+    subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
+    
+    # Measure execution time of the executable
+    start_time = timeit.default_timer()
+    subprocess.run([executable_file])  # Execute the generated executable
+    execution_time = timeit.default_timer() - start_time
+    print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
+    return execution_time
+
+    
 # Function to profile test file and collect timing results
 def profile_test_file(input_file, opt_sequence):
     pass
@@ -53,8 +66,8 @@ for input_file in test_files:
 
     for opt_sequence in optimization_permutations:
         print(f"Testing opt sequence #{optimization_permutations.index(opt_sequence)+1} for {input_file} ...")
-        compile_test_file_with_optimization(input_file, opt_sequence)
-        timing = 0#profile_test_file(input_file, opt_sequence)
+        timing = compile_test_file_with_optimization(input_file, opt_sequence)
+        #timing = profile_test_file(input_file, opt_sequence)
 
         if timing < lowest_time:
             second_lowest_time = lowest_time
@@ -65,10 +78,10 @@ for input_file in test_files:
             second_lowest_time = timing
             second_best_opt = opt_sequence
 
-    results.append([input_file, best_opt, second_best_opt])
+    results.append([input_file, lowest_time, second_lowest_time, best_opt, second_best_opt])
 
 # Write optimization results to a CSV file
 with open("best_optimization_results.csv", mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Testcase name", "Best opt pass", "Second Best Opt Pass"])
+    writer.writerow(["Testcase name", "Best Time", "Second Best Time" "Best opt pass", "Second Best Opt Pass"])
     writer.writerows(results)
