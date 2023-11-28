@@ -52,7 +52,7 @@ for input_file in test_files:
     second_lowest_time = float('inf')
 
     for opt_sequence in optimization_permutations:
-        print(f"Testing opt sequence #{optimization_permutations.index(opt_sequence)+1}...")
+        print(f"Testing opt sequence #{optimization_permutations.index(opt_sequence)+1} for {input_file} ...")
         compile_test_file_with_optimization(input_file, opt_sequence)
         timing = 0#profile_test_file(input_file, opt_sequence)
 
