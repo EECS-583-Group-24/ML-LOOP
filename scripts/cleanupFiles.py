@@ -1,7 +1,7 @@
 import os
 
 # Directory containing test files 
-test_directory = "/home/cbangera/EECS583/EECS583Project/files/simple"
+test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../files/simple'))
 
 # Fetch all C/C++ files in the test directory
 test_files = [file for file in os.listdir(test_directory) if file.endswith(('.c', '.cpp'))]
