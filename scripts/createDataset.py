@@ -53,35 +53,39 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
 def profile_test_file(input_file, opt_sequence):
     pass
 
+# Function to run LLVM pass on multiple files and collect features
+def run_LLVM_pass_on_files(test_files, test_directory, output_directory):
+    pass
+
 # List to store results
 results = []
+# Number of optimization passes to store
+store_size = 5
 
-# Get Best Optimization Pattern for each test case
+# Get Best Optimization Patterns for each test case
 for input_file in test_files:
     print(f"Processing {input_file}...")
-    best_opt = ""
-    second_best_opt = ""
-    lowest_time = float('inf')
-    second_lowest_time = float('inf')
+    best_opts = [0] * store_size  # Store the best five optimization passes for each file
+    lowest_times = [float('inf')] * store_size  # Keep track of the lowest times for the best five passes
 
     for opt_sequence in optimization_permutations:
-        print(f"Testing opt sequence #{optimization_permutations.index(opt_sequence)+1} for {input_file} ...")
+        pass_id = optimization_permutations.index(opt_sequence) + 1
+        print(f"Testing opt sequence #{pass_id} for {input_file} ...")
         timing = compile_test_file_with_optimization(input_file, opt_sequence)
-        #timing = profile_test_file(input_file, opt_sequence)
 
-        if timing < lowest_time:
-            second_lowest_time = lowest_time
-            second_best_opt = best_opt
-            lowest_time = timing
-            best_opt = opt_sequence
-        elif timing < second_lowest_time:
-            second_lowest_time = timing
-            second_best_opt = opt_sequence
+        # Update the best five passes and their execution times
+        for i, time in enumerate(lowest_times):
+            if timing < time:
+                lowest_times[i] = timing
+                best_opts[i] = pass_id
+                break
 
-    results.append([input_file, lowest_time, second_lowest_time, best_opt, second_best_opt])
+    results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
 
 # Write optimization results to a CSV file
 with open("best_optimization_results.csv", mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Testcase name", "Best Time", "Second Best Time" "Best opt pass", "Second Best Opt Pass"])
+    writer.writerow(["Testcase name", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
     writer.writerows(results)
+    
+run_LLVM_pass_on_files(test_files, test_directory, test_directory)
