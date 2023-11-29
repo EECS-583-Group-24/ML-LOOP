@@ -55,7 +55,39 @@ def profile_test_file(input_file, opt_sequence):
 
 # Function to run LLVM pass on multiple files and collect features
 def run_LLVM_pass_on_files(test_files, test_directory, output_directory):
-    pass
+    csv_file_path = os.path.join(output_directory, "features.csv")
+    with open(csv_file_path, mode='w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([
+            "Function Name",
+            "Total Dynamic Operations",
+            "Integer ALU Ratio",
+            "Floating-point ALU Ratio",
+            "Memory Ratio",
+            "Biased Branch Ratio",
+            "Unbiased Branch Ratio",
+            "Other Operations Ratio"
+        ])
+
+        # Compile LLVM pass and generate .so file
+        pass_compile_command = "clang++ -shared -fPIC pass.cpp -o HW1Pass.so"
+        subprocess.run(pass_compile_command, shell=True)
+        
+        # Run LLVM pass on each test file
+        for input_file in test_files:
+            print(f"Processing {input_file}...")
+            
+            # Compile the LLVM pass and run it on the test file
+            command = f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -o {os.path.splitext(input_file)[0]}.ll"
+            subprocess.run(command, shell=True)
+            
+            pass_command = f"opt -load ./HW1Pass.so -passes=hw1 {os.path.splitext(input_file)[0]}.ll -o {os.path.splitext(input_file)[0]}_output.ll"
+            subprocess.run(pass_command, shell=True)
+            
+            # Extract the output from benchmark.opcstats and append it to the CSV file
+            with open("benchmark.opcstats") as benchmark_file:
+                lines = benchmark_file.readlines()  # Process lines as needed for CSV writing
+                # Write results to CSV
 
 # List to store results
 results = []
