@@ -89,6 +89,23 @@ def run_LLVM_pass_on_files(test_files, test_directory, output_directory):
                 lines = benchmark_file.readlines()  # Process lines as needed for CSV writing
                 # Write results to CSV
 
+def compile_test_file_with_optimization_level(input_file, optimization_level):
+    # Create a directory based on the input file name
+    output_dir = os.path.join("output", os.path.splitext(input_file)[0])
+    os.makedirs(output_dir, exist_ok=True)
+
+    llvm_ir_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_level}.ll")
+
+    # Compile the file using the given optimization level
+    subprocess.run(f"clang -S -emit-llvm -O{optimization_level} {os.path.join(test_directory, input_file)} -o {llvm_ir_file}", shell=True)
+
+    # Measure execution time of the compiled LLVM IR file
+    start_time = timeit.default_timer()
+    subprocess.run(f"opt -S {llvm_ir_file} -o {llvm_ir_file}", shell=True)
+    execution_time = timeit.default_timer() - start_time
+    print(f"Execution time for {input_file} with -O{optimization_level}: {execution_time:.8f} seconds")
+    return execution_time
+
 # List to store results
 results = []
 # Number of optimization passes to store
@@ -111,7 +128,13 @@ for input_file in test_files:
                 lowest_times[i] = timing
                 best_opts[i] = pass_id
                 break
-
+        
+    # Compile test file with different optimization levels (O1, O2, O3)
+    for opt_level in range(1, 4):
+        timing = compile_test_file_with_optimization_level(input_file, opt_level)
+        # Update the results list with the timings for O1, O2, and O3
+        results.append([input_file, f"-O{opt_level}", timing])
+        
     results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
 
 # Write optimization results to a CSV file
