@@ -1,0 +1,6 @@
+
+bs.c: binary_search(x) replaced with int binary_search(int x)
+
+jfdctint.c: return; replaced with return 0; in main()
+
+sqrt.c: definition of fabs() added to avoid library use. Also, a main function was added to test the sqrt function.
