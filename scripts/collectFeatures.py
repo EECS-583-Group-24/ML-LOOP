@@ -26,12 +26,20 @@ for line in lines:
     if line.startswith('Output for'):
         # Extract the filename
         current_file = line.split('Output for ')[1].strip().rstrip(':')
-        file_data[current_file] = ''
+        file_data[current_file] = []
     else:
-        # Append the data to the corresponding file entry in the dictionary
-        file_data[current_file] += line.strip() + ',' if line.strip() else ''
+        # Split the line into individual integers
+        integers = [int(num) for num in line.strip().split(',') if num.isdigit()]
+        if integers:
+            # If data exists, add it to the corresponding file entry in the dictionary
+            if len(file_data[current_file]) == 0:
+                file_data[current_file] = integers
+            else:
+                # Add corresponding integers together
+                for i in range(len(integers)):
+                    file_data[current_file][i] += integers[i]
 
-# Write aggregated data to the same features.csv file
+# Write aggregated data to the final_features.csv file
 with open(final_csv_file_path, 'w') as output_file:
     for file, data in file_data.items():
-        output_file.write(f"{file},{data}\n")
+        output_file.write(f"{file},{','.join(map(str, data))}\n")
