@@ -3,8 +3,9 @@ import subprocess
 
 # Set the working directory
 directory_path = os.path.join(os.path.dirname(__file__), '../files/simple/')
+output_directory_path = os.path.join(os.path.dirname(__file__))
 csv_file_path = os.path.join(directory_path, 'features.csv')
-final_csv_file_path = os.path.join(directory_path, 'final_features.csv')
+final_csv_file_path = os.path.join(output_directory_path, 'final_features.csv')
 total_features = 33
 
 # Run the Bash script from that location
@@ -41,5 +42,6 @@ for line in lines:
 
 # Write aggregated data to the final_features.csv file
 with open(final_csv_file_path, 'w') as output_file:
+    output_file.write("filename,total_count,br_count,switch_count,indirectbr_count,add_count,sub_count,mul_count,udiv_count,sdiv_count,urem_count,shl_count,lshr_count,ashr_count,and_count,or_count,xor_count,icmp_count,srem_count,fadd_count,fsub_count,fmul_count,fdiv_count,frem_count,fcmp_count,alloca_count,load_count,store_count,getelementptr_count,fence_count,atomiccmpxchg_count,atomicrmw_count,other_count,biased_branch_count,unbiased_branch_count\n")
     for file, data in file_data.items():
         output_file.write(f"{file},{','.join(map(str, data))}\n")

@@ -140,7 +140,7 @@ for input_file in test_files:
 # Write optimization results to a CSV file
 with open("best_optimization_results.csv", mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Testcase name", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
+    writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
     writer.writerows(results)
     
-run_LLVM_pass_on_files(test_files, test_directory, test_directory)
+# run_LLVM_pass_on_files(test_files, test_directory, test_directory)
