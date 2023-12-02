@@ -1,5 +1,6 @@
 #include "llvm/Analysis/BlockFrequencyInfo.h"
 #include "llvm/Analysis/BranchProbabilityInfo.h"
+#include "llvm/Analysis/LoopNestAnalysis.h"
 #include "llvm/IR/PassManager.h"
 #include "llvm/Passes/PassBuilder.h"
 #include "llvm/Passes/PassPlugin.h"
@@ -18,189 +19,173 @@ namespace
         PreservedAnalyses run(Function &F, FunctionAnalysisManager &FAM)
         {
 
-            std::vector<uint64_t> categoryCount(33, 0);
-            int count = 0;
+            // Inst Categories
+            std::set<std::string> branch({"br", "switch", "indirectbr"});
+            std::set<std::string> integerALU({"add", "sub", "mul", "udiv", "sdiv", "urem", "shl", "lshr", "ashr", "and", "or", "xor", "icmp", "srem"});
+            std::set<std::string> fpALU({"fadd", "fsub", "fmul", "fdiv", "frem", "fcmp"});
+            std::set<std::string> memory({"alloca", "load", "store", "getelementptr", "fence", "atomiccmpxchg", "atomicrmw"});
+
+            // LOOP RELATED FEATURES
+            std::vector<double> averageLoopInstCount(5, 0);
+            int loopCount = 0;
+            int loopTotalDynamicInstCount = 0;
+            int loopTotalStaticInstCount = 0;
+            double averageBBPerLoop = 0;
+
+            // INST COUNT RELATED FEATURES
+            std::vector<uint64_t> staticInstCount(5, 0);
+            std::vector<uint64_t> dynamicInstCount(5, 0);
+            int totalBBs = 0;
+            int totalDynamicInstCount = 0;
+            int totalStaticInstCount = 0;
+            double averageStaticInstPerBB = 0;
+            int biasedBranchCount = 0;
+            int unbiasedBranchCount = 0;
 
             llvm::BlockFrequencyAnalysis::Result &bfi = FAM.getResult<BlockFrequencyAnalysis>(F);
             llvm::BranchProbabilityAnalysis::Result &bpi = FAM.getResult<BranchProbabilityAnalysis>(F);
             llvm::LoopAnalysis::Result &li = FAM.getResult<LoopAnalysis>(F);
-            llvm::LoopNestAnalysis::Result &lni = FAM.getResult<LoopNestAnalysis>(F);
-            auto &test = FAM.getResult<MemoryUsageAnalys
-            
+
+            // Loop Feature Extraction
+            for (Loop *loop : li)
+            {
+                std::vector<uint64_t> loopInstCount(5, 0);
+                loopCount += 1;
+                averageBBPerLoop += loop->getNumBlocks();
+                for (auto bb : loop->getBlocks())
+                {
+                    for (auto &instr : *bb)
+                    {
+                        std::string opcode = instr.getOpcodeName();
+                        uint64_t blockCount = bfi.getBlockProfileCount(instr.getParent()).value();
+                        loopTotalDynamicInstCount += blockCount;
+                        loopTotalStaticInstCount += 1;
+
+                        if(integerALU.find(opcode) != integerALU.end()){
+                            loopInstCount[0] += 1;
+                        } else if(fpALU.find(opcode) != fpALU.end()) {
+                            loopInstCount[1] += 1;
+                        } else if(memory.find(opcode) != memory.end()) {
+                            loopInstCount[2] += 1;
+                        } else if(branch.find(opcode) != branch.end()) {
+                            loopInstCount[3] += 1;
+                        } else {
+                            loopInstCount[4] += 1;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < averageLoopInstCount.size(); i++)
+                {
+                    double sum = averageLoopInstCount[i] * (loopCount - 1) + loopInstCount[i];
+                    averageLoopInstCount[i] = sum / loopCount;
+                }
+
+                averageBBPerLoop /= loopCount;
+            }
+
+            // Inst Count Feature Extraction
             for (auto &bb : F)
             {
                 // errs() << "BB!\n";
+                totalBBs++;
 
-                // Loop Feature Extraction
-                for (Loop *loop : li) {
-
-                }
-
-
-                // Instruction Count Extraction
                 for (auto &instr : bb)
                 {
                     std::string opcode = instr.getOpcodeName();
                     uint64_t blockCount = bfi.getBlockProfileCount(instr.getParent()).value();
-                    count += blockCount;
-
+                    totalDynamicInstCount += blockCount;
+                    totalStaticInstCount += 1;
 
                     // Biased Branch Count
-                    if(opcode == "br" || opcode == "switch" || opcode == "indirectbr") {
+                    if (opcode == "br" || opcode == "switch" || opcode == "indirectbr")
+                    {
                         // If successor single target, then biased
-                        if(instr.getNumSuccessors() == 1) {
-                            categoryCount[31] += blockCount;
+                        if (instr.getNumSuccessors() == 1)
+                        {
+                            biasedBranchCount += blockCount;
                             continue;
                         }
                         // Iterate through successors
                         bool flag = false;
-                        for(int j = 0; j < instr.getNumSuccessors(); j++) {
-                            BasicBlock* target = instr.getSuccessor(j);
+                        for (int j = 0; j < instr.getNumSuccessors(); j++)
+                        {
+                            BasicBlock *target = instr.getSuccessor(j);
                             BranchProbability branchProbability = bpi.getEdgeProbability(&bb, target);
-                            if(branchProbability > BranchProbability(4,5)) {
-                                categoryCount[31] += blockCount;
+                            if (branchProbability > BranchProbability(4, 5))
+                            {
+                                biasedBranchCount += blockCount;
                                 flag = true;
                                 break;
                             }
                         }
-                        if(!flag) {
-                            categoryCount[32] += blockCount;
+                        if (!flag)
+                        {
+                            unbiasedBranchCount += blockCount;
                         }
                     }
 
                     // Instruction Counts
-                    if (opcode == "br")
-                    {
-                        categoryCount[0] += blockCount;
-                    }
-                    else if (opcode == "switch")
-                    {
-                        categoryCount[1] += blockCount;
-                    }
-                    else if (opcode == "indirectbr")
-                    {
-                        categoryCount[2] += blockCount;
-                    }
-                    else if (opcode == "add")
-                    {
-                        categoryCount[3] += blockCount;
-                    }
-                    else if (opcode == "sub")
-                    {
-                        categoryCount[4] += blockCount;
-                    }
-                    else if (opcode == "mul")
-                    {
-                        categoryCount[5] += blockCount;
-                    }
-                    else if (opcode == "udiv")
-                    {
-                        categoryCount[6] += blockCount;
-                    }
-                    else if (opcode == "sdiv")
-                    {
-                        categoryCount[7] += blockCount;
-                    }
-                    else if (opcode == "urem")
-                    {
-                        categoryCount[8] += blockCount;
-                    }
-                    else if (opcode == "shl")
-                    {
-                        categoryCount[9] += blockCount;
-                    }
-                    else if (opcode == "lshr")
-                    {
-                        categoryCount[10] += blockCount;
-                    }
-                    else if (opcode == "ashr")
-                    {
-                        categoryCount[11] += blockCount;
-                    }
-                    else if (opcode == "and")
-                    {
-                        categoryCount[12] += blockCount;
-                    }
-                    else if (opcode == "or")
-                    {
-                        categoryCount[13] += blockCount;
-                    }
-                    else if (opcode == "xor")
-                    {
-                        categoryCount[14] += blockCount;
-                    }
-                    else if (opcode == "icmp")
-                    {
-                        categoryCount[15] += blockCount;
-                    }
-                    else if (opcode == "srem")
-                    {
-                        categoryCount[16] += blockCount;
-                    }
-                    else if (opcode == "fadd")
-                    {
-                        categoryCount[17] += blockCount;
-                    }
-                    else if (opcode == "fsub")
-                    {
-                        categoryCount[18] += blockCount;
-                    }
-                    else if (opcode == "fmul")
-                    {
-                        categoryCount[19] += blockCount;
-                    }
-                    else if (opcode == "fdiv")
-                    {
-                        categoryCount[20] += blockCount;
-                    }
-                    else if (opcode == "frem")
-                    {
-                        categoryCount[21] += blockCount;
-                    }
-                    else if (opcode == "fcmp")
-                    {
-                        categoryCount[22] += blockCount;
-                    }
-                    else if (opcode == "alloca")
-                    {
-                        categoryCount[23] += blockCount;
-                    }
-                    else if (opcode == "load")
-                    {
-                        categoryCount[24] += blockCount;
-                    }
-                    else if (opcode == "store")
-                    {
-                        categoryCount[25] += blockCount;
-                    }
-                    else if (opcode == "getelementptr")
-                    {
-                        categoryCount[26] += blockCount;
-                    }
-                    else if (opcode == "fence")
-                    {
-                        categoryCount[27] += blockCount;
-                    }
-                    else if (opcode == "atomiccmpxchg")
-                    {
-                        categoryCount[28] += blockCount;
-                    }
-                    else if (opcode == "atomicrmw")
-                    {
-                        categoryCount[29] += blockCount;
-                    }
-                    else
-                    {
-                        categoryCount[30] += blockCount;
+                    if(integerALU.find(opcode) != integerALU.end()){
+                        dynamicInstCount[0] += blockCount;
+                        staticInstCount[0] += 1;
+                    } else if(fpALU.find(opcode) != fpALU.end()) {
+                        dynamicInstCount[1] += blockCount;
+                        staticInstCount[1] += 1;
+                    } else if(memory.find(opcode) != memory.end()) {
+                        dynamicInstCount[2] += blockCount;
+                        staticInstCount[2] += 1;
+                    } else if(branch.find(opcode) != branch.end()) {
+                        dynamicInstCount[3] += blockCount;
+                        staticInstCount[3] += 1;
+                    } else {
+                        dynamicInstCount[4] += blockCount;
+                        staticInstCount[4] += 1;
                     }
                 }
             }
 
-            errs() << count << ",";
-            for (auto it : categoryCount)
+            // Overall CFG stats.
+            errs() << totalBBs << "," << format("%0.3f,", (double)((double)totalStaticInstCount/(double)totalBBs));
+
+            // Dynamic Instruction Counts
+            errs() << totalDynamicInstCount << ",";
+            for (auto it : dynamicInstCount)
             { // iterate all categories
                 errs() << it << ",";
             }
+
+            // Static Instruction Counts
+            errs() << totalStaticInstCount << ",";
+            for (auto it : staticInstCount)
+            { // iterate all categories
+                errs() << it << ",";
+            }
+
+            // Dynamic to Instruction Count Ratios per Instruction
+            errs() << format("%.3f,",(double)((double)totalDynamicInstCount / (double)totalStaticInstCount));
+            for (int i = 0; i < dynamicInstCount.size(); i++)
+            {
+                if (staticInstCount[i] == 0)
+                {
+                    errs() << 0 << ",";
+                }
+                else
+                {
+                    errs() << format("%.3f,",(double)((double)dynamicInstCount[i] / (double)staticInstCount[i]));
+                }
+            }
+
+            // Branch Bias Count
+            errs() << biasedBranchCount << "," << unbiasedBranchCount << ",";
+
+            // Loop Features
+            errs() << loopCount << "," << format("%.3f,",averageBBPerLoop) << loopTotalStaticInstCount << ",";
+            for(int i = 0 ; i < averageLoopInstCount.size() ; i++) {
+                errs() << format("%.3f,",averageLoopInstCount[i]);
+            }
+
+
             errs() << "\n";
 
             return PreservedAnalyses::all();
