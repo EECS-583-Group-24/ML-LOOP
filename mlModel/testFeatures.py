@@ -2,10 +2,10 @@ import os
 import subprocess
 
 # Set the working directory
-directory_path = os.path.join(os.path.dirname(__file__), '../files/simple/')
+directory_path = os.path.join(os.path.dirname(__file__), '../files/test/')
 output_directory_path = os.path.join(os.path.dirname(__file__))
 csv_file_path = os.path.join(directory_path, 'features.csv')
-final_csv_file_path = os.path.join(output_directory_path, 'final_features.csv')
+final_csv_file_path = os.path.join(output_directory_path, 'test_features.csv')
 total_features = 33
 
 # Run the Bash script from that location
