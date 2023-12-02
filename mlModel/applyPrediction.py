@@ -116,6 +116,12 @@ pass_id = predicted_opt_sequence-1
 print(f"Testing opt sequence #{predicted_opt_sequence} for {filename} ...")
 timing = compile_test_file_with_optimization(filename, optimization_permutations[pass_id])
 print(f"{filename}: pass {predicted_opt_sequence}", timing)
+
+
+print(f"Comparing opt sequence #1 for {filename} ...")
+timing = compile_test_file_with_optimization(filename, optimization_permutations[0])
+print(f"{filename}: pass {predicted_opt_sequence}", timing)
+
     
 # Compile test file with different optimization levels (O1, O2, O3)
 for opt_level in range(1, 4):

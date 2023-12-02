@@ -25,7 +25,7 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     os.makedirs(output_dir, exist_ok=True)
     
     non_optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -o {non_optimized_file}", shell=True)
+    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -Xclang -disable-O0-optnone -o {non_optimized_file}", shell=True)
     
     # Join the list elements into a single string
     opt_flags = ' '.join(opt_sequence)
@@ -34,7 +34,7 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_permutations.index(opt_sequence)+1}.ll")
 
     # Execute the opt command and place the output file in the directory
-    subprocess.run(f"opt {opt_flags} {non_optimized_file} -o {optimized_file}", shell=True)
+    subprocess.run(f"opt --targetlibinfo --tti --tbaa --scoped-noalias-aa --assumption-cache-tracker --profile-summary-info --called-value-propagation --domtree --basic-aa --aa --loops --lazy-branch-prob --lazy-block-freq --opt-remark-emitter --basiccg --memoryssa --early-cse-memssa --speculative-execution --lazy-value-info --correlated-propagation --libcalls-shrinkwrap --lcssa-verification --scalar-evolution --simple-loop-unswitch --memdep --postdomtree --loop-distribute --loop-load-elim --loop-sink --instsimplify --div-rem-pairs --verify --early-cse --lower-expect --elim-avail-extern --callsite-splitting {opt_flags} {non_optimized_file} -o {optimized_file}", shell=True)
     
     # Formulate the output executable file path
     executable_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_permutations.index(opt_sequence)+1}")
@@ -48,60 +48,28 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
     return execution_time
 
-    
-# Function to profile test file and collect timing results
-def profile_test_file(input_file, opt_sequence):
-    pass
-
-# Function to run LLVM pass on multiple files and collect features
-def run_LLVM_pass_on_files(test_files, test_directory, output_directory):
-    csv_file_path = os.path.join(output_directory, "features.csv")
-    with open(csv_file_path, mode='w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerow([
-            "Function Name",
-            "Total Dynamic Operations",
-            "Integer ALU Ratio",
-            "Floating-point ALU Ratio",
-            "Memory Ratio",
-            "Biased Branch Ratio",
-            "Unbiased Branch Ratio",
-            "Other Operations Ratio"
-        ])
-
-        # Compile LLVM pass and generate .so file
-        pass_compile_command = "clang++ -shared -fPIC pass.cpp -o HW1Pass.so"
-        subprocess.run(pass_compile_command, shell=True)
-        
-        # Run LLVM pass on each test file
-        for input_file in test_files:
-            print(f"Processing {input_file}...")
-            
-            # Compile the LLVM pass and run it on the test file
-            command = f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -o {os.path.splitext(input_file)[0]}.ll"
-            subprocess.run(command, shell=True)
-            
-            pass_command = f"opt -load ./HW1Pass.so -passes=hw1 {os.path.splitext(input_file)[0]}.ll -o {os.path.splitext(input_file)[0]}_output.ll"
-            subprocess.run(pass_command, shell=True)
-            
-            # Extract the output from benchmark.opcstats and append it to the CSV file
-            with open("benchmark.opcstats") as benchmark_file:
-                lines = benchmark_file.readlines()  # Process lines as needed for CSV writing
-                # Write results to CSV
 
 def compile_test_file_with_optimization_level(input_file, optimization_level):
     # Create a directory based on the input file name
     output_dir = os.path.join("output", os.path.splitext(input_file)[0])
     os.makedirs(output_dir, exist_ok=True)
 
-    llvm_ir_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_level}.ll")
+    llvm_ir_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}.ll")
 
     # Compile the file using the given optimization level
-    subprocess.run(f"clang -S -emit-llvm -O{optimization_level} {os.path.join(test_directory, input_file)} -o {llvm_ir_file}", shell=True)
+    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -Xclang -disable-O0-optnone -o {llvm_ir_file}", shell=True)
+
+    optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_O{optimization_level}.ll")
+
+    subprocess.run(f"opt -O{optimization_level} {llvm_ir_file} -o {optimized_file}", shell=True)
+    
+    executable_file =  os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_O{optimization_level}")
+
+    subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
 
     # Measure execution time of the compiled LLVM IR file
     start_time = timeit.default_timer()
-    subprocess.run(f"opt -S {llvm_ir_file} -o {llvm_ir_file}", shell=True)
+    subprocess.run([executable_file])
     execution_time = timeit.default_timer() - start_time
     print(f"Execution time for {input_file} with -O{optimization_level}: {execution_time:.8f} seconds")
     return execution_time

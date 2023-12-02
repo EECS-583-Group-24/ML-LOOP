@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // Function to calculate factorial recursively
 int factorial(int n) {
     if (n == 0 || n == 1) {
@@ -19,6 +21,6 @@ int main() {
     }
 
     int result = factorial(1500);
-
+    printf("%d\n", result);
     return 0;
 }

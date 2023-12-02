@@ -13,5 +13,6 @@ double sqrt_of_sum_of_squares(int n) {
 
 int main() {
     double result = sqrt_of_sum_of_squares(MAX);
+    printf("%f\n", result);
     return 0;
 }

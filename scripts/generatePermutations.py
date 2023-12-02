@@ -20,3 +20,6 @@ unique_permutations = set(itertools.permutations(optimization_values))
 with open('optimization_permutations.txt', 'w') as txtfile:
     for permutation in unique_permutations:
         txtfile.write(' '.join(permutation) + '\n')
+
+
+# --targetlibinfo --tti --tbaa --scoped-noalias-aa --assumption-cache-tracker --profile-summary-info --called-value-propagation --domtree --basic-aa --aa --loops --lazy-branch-prob --lazy-block-freq --opt-remark-emitter --basiccg --memoryssa --early-cse-memssa --speculative-execution --lazy-value-info --correlated-propagation --libcalls-shrinkwrap --lcssa-verification --scalar-evolution --simple-loop-unswitch --memdep --postdomtree --loop-distribute --loop-load-elim --loop-sink --instsimplify --div-rem-pairs --verify --early-cse --lower-expect --elim-avail-extern --callsite-splitting
