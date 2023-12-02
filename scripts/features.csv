@@ -1,4 +1,0 @@
-Output for pass.cpp:
-Failed to load passes from '../../featurePass/build/featurePass/FeaturePass.so'. Request ignored.
-opt: pass.profdata.bc: error: Could not open input file: No such file or directory
-
