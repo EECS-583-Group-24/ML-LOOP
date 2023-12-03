@@ -17,3 +17,12 @@
 /home/riwa/project/featurePass/build/featurePass/CMakeFiles/install.dir
 /home/riwa/project/featurePass/build/featurePass/CMakeFiles/install/local.dir
 /home/riwa/project/featurePass/build/featurePass/CMakeFiles/install/strip.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/LoopFeaturePass.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/install-LoopFeaturePass.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/edit_cache.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/rebuild_cache.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/list_install_components.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/install.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/install/local.dir
+/home/riwa/project/featurePass/build/loopPass/CMakeFiles/install/strip.dir

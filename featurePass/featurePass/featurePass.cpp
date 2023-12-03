@@ -42,6 +42,8 @@ namespace
             int biasedBranchCount = 0;
             int unbiasedBranchCount = 0;
 
+            auto &LAM = FAM.getResult<LoopAnalysisManagerFunctionProxy>(F).getManager();
+
             llvm::BlockFrequencyAnalysis::Result &bfi = FAM.getResult<BlockFrequencyAnalysis>(F);
             llvm::BranchProbabilityAnalysis::Result &bpi = FAM.getResult<BranchProbabilityAnalysis>(F);
             llvm::LoopAnalysis::Result &li = FAM.getResult<LoopAnalysis>(F);
@@ -61,15 +63,24 @@ namespace
                         loopTotalDynamicInstCount += blockCount;
                         loopTotalStaticInstCount += 1;
 
-                        if(integerALU.find(opcode) != integerALU.end()){
+                        if (integerALU.find(opcode) != integerALU.end())
+                        {
                             loopInstCount[0] += 1;
-                        } else if(fpALU.find(opcode) != fpALU.end()) {
+                        }
+                        else if (fpALU.find(opcode) != fpALU.end())
+                        {
                             loopInstCount[1] += 1;
-                        } else if(memory.find(opcode) != memory.end()) {
+                        }
+                        else if (memory.find(opcode) != memory.end())
+                        {
                             loopInstCount[2] += 1;
-                        } else if(branch.find(opcode) != branch.end()) {
+                        }
+                        else if (branch.find(opcode) != branch.end())
+                        {
                             loopInstCount[3] += 1;
-                        } else {
+                        }
+                        else
+                        {
                             loopInstCount[4] += 1;
                         }
                     }
@@ -126,19 +137,28 @@ namespace
                     }
 
                     // Instruction Counts
-                    if(integerALU.find(opcode) != integerALU.end()){
+                    if (integerALU.find(opcode) != integerALU.end())
+                    {
                         dynamicInstCount[0] += blockCount;
                         staticInstCount[0] += 1;
-                    } else if(fpALU.find(opcode) != fpALU.end()) {
+                    }
+                    else if (fpALU.find(opcode) != fpALU.end())
+                    {
                         dynamicInstCount[1] += blockCount;
                         staticInstCount[1] += 1;
-                    } else if(memory.find(opcode) != memory.end()) {
+                    }
+                    else if (memory.find(opcode) != memory.end())
+                    {
                         dynamicInstCount[2] += blockCount;
                         staticInstCount[2] += 1;
-                    } else if(branch.find(opcode) != branch.end()) {
+                    }
+                    else if (branch.find(opcode) != branch.end())
+                    {
                         dynamicInstCount[3] += blockCount;
                         staticInstCount[3] += 1;
-                    } else {
+                    }
+                    else
+                    {
                         dynamicInstCount[4] += blockCount;
                         staticInstCount[4] += 1;
                     }
@@ -146,7 +166,7 @@ namespace
             }
 
             // Overall CFG stats.
-            errs() << totalBBs << "," << format("%0.3f,", (double)((double)totalStaticInstCount/(double)totalBBs));
+            errs() << totalBBs << "," << format("%0.3f,", (double)((double)totalStaticInstCount / (double)totalBBs));
 
             // Dynamic Instruction Counts
             errs() << totalDynamicInstCount << ",";
@@ -163,7 +183,7 @@ namespace
             }
 
             // Dynamic to Instruction Count Ratios per Instruction
-            errs() << format("%.3f,",(double)((double)totalDynamicInstCount / (double)totalStaticInstCount));
+            errs() << format("%.3f,", (double)((double)totalDynamicInstCount / (double)totalStaticInstCount));
             for (int i = 0; i < dynamicInstCount.size(); i++)
             {
                 if (staticInstCount[i] == 0)
@@ -172,7 +192,7 @@ namespace
                 }
                 else
                 {
-                    errs() << format("%.3f,",(double)((double)dynamicInstCount[i] / (double)staticInstCount[i]));
+                    errs() << format("%.3f,", (double)((double)dynamicInstCount[i] / (double)staticInstCount[i]));
                 }
             }
 
@@ -180,11 +200,11 @@ namespace
             errs() << biasedBranchCount << "," << unbiasedBranchCount << ",";
 
             // Loop Features
-            errs() << loopCount << "," << format("%.3f,",averageBBPerLoop) << loopTotalStaticInstCount << ",";
-            for(int i = 0 ; i < averageLoopInstCount.size() ; i++) {
-                errs() << format("%.3f,",averageLoopInstCount[i]);
+            errs() << loopCount << "," << format("%.3f,", averageBBPerLoop) << loopTotalStaticInstCount << ",";
+            for (int i = 0; i < averageLoopInstCount.size(); i++)
+            {
+                errs() << format("%.3f,", averageLoopInstCount[i]);
             }
-
 
             errs() << "\n";
 

@@ -12,6 +12,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.22.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.22.1/CMakeSystem.cmake"
   "../featurePass/CMakeLists.txt"
+  "../loopPass/CMakeLists.txt"
   "/usr/local/lib/cmake/llvm/AddLLVM.cmake"
   "/usr/local/lib/cmake/llvm/DetermineGCCCompatible.cmake"
   "/usr/local/lib/cmake/llvm/FindTerminfo.cmake"
@@ -63,6 +64,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   "featurePass/CMakeFiles/CMakeDirectoryInformation.cmake"
+  "loopPass/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -74,4 +76,7 @@ set(CMAKE_DEPEND_INFO_FILES
   "featurePass/CMakeFiles/FeaturePass.dir/DependInfo.cmake"
   "featurePass/CMakeFiles/install-FeaturePass.dir/DependInfo.cmake"
   "featurePass/CMakeFiles/install-FeaturePass-stripped.dir/DependInfo.cmake"
+  "loopPass/CMakeFiles/LoopFeaturePass.dir/DependInfo.cmake"
+  "loopPass/CMakeFiles/install-LoopFeaturePass.dir/DependInfo.cmake"
+  "loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/DependInfo.cmake"
   )

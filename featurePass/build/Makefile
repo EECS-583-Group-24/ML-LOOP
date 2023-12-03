@@ -87,7 +87,7 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"FeaturePass\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"FeaturePass\" \"LoopFeaturePass\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -252,6 +252,45 @@ install-FeaturePass-stripped/fast:
 	$(MAKE) $(MAKESILENT) -f featurePass/CMakeFiles/install-FeaturePass-stripped.dir/build.make featurePass/CMakeFiles/install-FeaturePass-stripped.dir/build
 .PHONY : install-FeaturePass-stripped/fast
 
+#=============================================================================
+# Target rules for targets named LoopFeaturePass
+
+# Build rule for target.
+LoopFeaturePass: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 LoopFeaturePass
+.PHONY : LoopFeaturePass
+
+# fast build rule for target.
+LoopFeaturePass/fast:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/LoopFeaturePass.dir/build.make loopPass/CMakeFiles/LoopFeaturePass.dir/build
+.PHONY : LoopFeaturePass/fast
+
+#=============================================================================
+# Target rules for targets named install-LoopFeaturePass
+
+# Build rule for target.
+install-LoopFeaturePass: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 install-LoopFeaturePass
+.PHONY : install-LoopFeaturePass
+
+# fast build rule for target.
+install-LoopFeaturePass/fast:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass.dir/build
+.PHONY : install-LoopFeaturePass/fast
+
+#=============================================================================
+# Target rules for targets named install-LoopFeaturePass-stripped
+
+# Build rule for target.
+install-LoopFeaturePass-stripped: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 install-LoopFeaturePass-stripped
+.PHONY : install-LoopFeaturePass-stripped
+
+# fast build rule for target.
+install-LoopFeaturePass-stripped/fast:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build
+.PHONY : install-LoopFeaturePass-stripped/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -268,9 +307,12 @@ help:
 	@echo "... acc_gen"
 	@echo "... install-FeaturePass"
 	@echo "... install-FeaturePass-stripped"
+	@echo "... install-LoopFeaturePass"
+	@echo "... install-LoopFeaturePass-stripped"
 	@echo "... intrinsics_gen"
 	@echo "... omp_gen"
 	@echo "... FeaturePass"
+	@echo "... LoopFeaturePass"
 .PHONY : help
 
 

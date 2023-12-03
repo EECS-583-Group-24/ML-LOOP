@@ -64,10 +64,12 @@ CMAKE_BINARY_DIR = /home/riwa/project/featurePass/build
 
 # The main recursive "all" target.
 all: featurePass/all
+all: loopPass/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: featurePass/preinstall
+preinstall: loopPass/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
@@ -76,6 +78,7 @@ clean: CMakeFiles/omp_gen.dir/clean
 clean: CMakeFiles/acc_gen.dir/clean
 clean: CMakeFiles/RISCVTargetParserTableGen.dir/clean
 clean: featurePass/clean
+clean: loopPass/clean
 .PHONY : clean
 
 #=============================================================================
@@ -94,6 +97,23 @@ featurePass/clean: featurePass/CMakeFiles/FeaturePass.dir/clean
 featurePass/clean: featurePass/CMakeFiles/install-FeaturePass.dir/clean
 featurePass/clean: featurePass/CMakeFiles/install-FeaturePass-stripped.dir/clean
 .PHONY : featurePass/clean
+
+#=============================================================================
+# Directory level rules for directory loopPass
+
+# Recursive "all" directory target.
+loopPass/all: loopPass/CMakeFiles/LoopFeaturePass.dir/all
+.PHONY : loopPass/all
+
+# Recursive "preinstall" directory target.
+loopPass/preinstall:
+.PHONY : loopPass/preinstall
+
+# Recursive "clean" directory target.
+loopPass/clean: loopPass/CMakeFiles/LoopFeaturePass.dir/clean
+loopPass/clean: loopPass/CMakeFiles/install-LoopFeaturePass.dir/clean
+loopPass/clean: loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/clean
+.PHONY : loopPass/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/intrinsics_gen.dir
@@ -276,6 +296,84 @@ install-FeaturePass-stripped: featurePass/CMakeFiles/install-FeaturePass-strippe
 featurePass/CMakeFiles/install-FeaturePass-stripped.dir/clean:
 	$(MAKE) $(MAKESILENT) -f featurePass/CMakeFiles/install-FeaturePass-stripped.dir/build.make featurePass/CMakeFiles/install-FeaturePass-stripped.dir/clean
 .PHONY : featurePass/CMakeFiles/install-FeaturePass-stripped.dir/clean
+
+#=============================================================================
+# Target rules for target loopPass/CMakeFiles/LoopFeaturePass.dir
+
+# All Build rule for target.
+loopPass/CMakeFiles/LoopFeaturePass.dir/all:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/LoopFeaturePass.dir/build.make loopPass/CMakeFiles/LoopFeaturePass.dir/depend
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/LoopFeaturePass.dir/build.make loopPass/CMakeFiles/LoopFeaturePass.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/riwa/project/featurePass/build/CMakeFiles --progress-num=3,4 "Built target LoopFeaturePass"
+.PHONY : loopPass/CMakeFiles/LoopFeaturePass.dir/all
+
+# Build rule for subdir invocation for target.
+loopPass/CMakeFiles/LoopFeaturePass.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 loopPass/CMakeFiles/LoopFeaturePass.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 0
+.PHONY : loopPass/CMakeFiles/LoopFeaturePass.dir/rule
+
+# Convenience name for target.
+LoopFeaturePass: loopPass/CMakeFiles/LoopFeaturePass.dir/rule
+.PHONY : LoopFeaturePass
+
+# clean rule for target.
+loopPass/CMakeFiles/LoopFeaturePass.dir/clean:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/LoopFeaturePass.dir/build.make loopPass/CMakeFiles/LoopFeaturePass.dir/clean
+.PHONY : loopPass/CMakeFiles/LoopFeaturePass.dir/clean
+
+#=============================================================================
+# Target rules for target loopPass/CMakeFiles/install-LoopFeaturePass.dir
+
+# All Build rule for target.
+loopPass/CMakeFiles/install-LoopFeaturePass.dir/all: loopPass/CMakeFiles/LoopFeaturePass.dir/all
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass.dir/depend
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/riwa/project/featurePass/build/CMakeFiles --progress-num= "Built target install-LoopFeaturePass"
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass.dir/all
+
+# Build rule for subdir invocation for target.
+loopPass/CMakeFiles/install-LoopFeaturePass.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 loopPass/CMakeFiles/install-LoopFeaturePass.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 0
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass.dir/rule
+
+# Convenience name for target.
+install-LoopFeaturePass: loopPass/CMakeFiles/install-LoopFeaturePass.dir/rule
+.PHONY : install-LoopFeaturePass
+
+# clean rule for target.
+loopPass/CMakeFiles/install-LoopFeaturePass.dir/clean:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass.dir/clean
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass.dir/clean
+
+#=============================================================================
+# Target rules for target loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir
+
+# All Build rule for target.
+loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/all: loopPass/CMakeFiles/LoopFeaturePass.dir/all
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/depend
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/riwa/project/featurePass/build/CMakeFiles --progress-num= "Built target install-LoopFeaturePass-stripped"
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/all
+
+# Build rule for subdir invocation for target.
+loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/riwa/project/featurePass/build/CMakeFiles 0
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/rule
+
+# Convenience name for target.
+install-LoopFeaturePass-stripped: loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/rule
+.PHONY : install-LoopFeaturePass-stripped
+
+# clean rule for target.
+loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/clean:
+	$(MAKE) $(MAKESILENT) -f loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/build.make loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/clean
+.PHONY : loopPass/CMakeFiles/install-LoopFeaturePass-stripped.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
