@@ -42,7 +42,8 @@ namespace
             int biasedBranchCount = 0;
             int unbiasedBranchCount = 0;
 
-            auto &LAM = FAM.getResult<LoopAnalysisManagerFunctionProxy>(F).getManager();
+            // RECURSIVE FUNCTION COUNT FEATURE
+            int recursiveCount = 0;
 
             llvm::BlockFrequencyAnalysis::Result &bfi = FAM.getResult<BlockFrequencyAnalysis>(F);
             llvm::BranchProbabilityAnalysis::Result &bpi = FAM.getResult<BranchProbabilityAnalysis>(F);
@@ -107,6 +108,17 @@ namespace
                     uint64_t blockCount = bfi.getBlockProfileCount(instr.getParent()).value();
                     totalDynamicInstCount += blockCount;
                     totalStaticInstCount += 1;
+
+                    // Check for recursive call.
+                    CallInst *callInst = dyn_cast<CallInst>(&instr);
+                    if(callInst != nullptr) {
+                        if (Function *calledFunction = callInst->getCalledFunction()) {
+                            if (calledFunction->getName() == F.getName()) {
+                                errs() << "Recursive function detected\n";
+                                recursiveCount++;
+                            }
+                        }
+                    }
 
                     // Biased Branch Count
                     if (opcode == "br" || opcode == "switch" || opcode == "indirectbr")
@@ -205,6 +217,9 @@ namespace
             {
                 errs() << format("%.3f,", averageLoopInstCount[i]);
             }
+
+            // Recursive Count Feature
+            errs() << recursiveCount;
 
             errs() << "\n";
 
