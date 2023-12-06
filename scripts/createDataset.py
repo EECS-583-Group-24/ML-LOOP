@@ -78,6 +78,7 @@ def compile_test_file_with_optimization_level(input_file, optimization_level):
 results = []
 # Number of optimization passes to store
 store_size = 5
+#TODO: Fix this/refactor this
 
 # Get Best Optimization Patterns for each test case
 for input_file in test_files:

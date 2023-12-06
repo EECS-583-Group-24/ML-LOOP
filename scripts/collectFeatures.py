@@ -41,10 +41,11 @@ for line in lines:
                 # Add corresponding integers together
                 for i in range(len(integers)):
                     file_data[current_file][i] += integers[i]
+                # TODO: Figure out how to do averages
 
 # Write aggregated data to the final_features.csv file
 with open(final_csv_file_path, 'w') as output_file:
-    output_file.write("filename,totalBBs,averageInstPerBB,totalDynInstCount,dynIntALUCount,dynFpALUCount,dynMemCount,dynBranchCount,dynOtherCount,totalStaticInstCount,staticIntALUCont,staticFpALUCount,staticMemCount,staticBranchCount,staticOtherCount,dynStatIntALU,dynStatFpALU,dynStatMem,dynStatBranch,dynStatOther,biasBranch,unbiasBranch,averageBBPerLoop,loopTotalStaticInstCount,averageLoopIntALU,averageLoopFpALU,averageLoopMem,averageLoopBranch,averageLoopOther,recursiveCount\n")
+    output_file.write("filename,totalBBs,averageInstPerBB,totalDynInstCount,dynIntALUCount,dynFpALUCount,dynMemCount,dynBranchCount,dynOtherCount,totalStaticInstCount,staticIntALUCont,staticFpALUCount,staticMemCount,staticBranchCount,staticOtherCount,dynStatIntALU,dynStatFpALU,dynStatMem,dynStatBranch,dynStatOther,biasBranch,unbiasBranch,loopCount,averageBBPerLoop,loopTotalStaticInstCount,averageLoopIntALU,averageLoopFpALU,averageLoopMem,averageLoopBranch,averageLoopOther,recursiveCount\n")
     for file, data in file_data.items():
         output_file.write(f"{file},{','.join(map(str, data))}\n")
 
