@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC  -Wl,-rpath-link,  -Wl,--gc-sections -shared  -o FeaturePass.so CMakeFiles/FeaturePass.dir/featurePass.cpp.o  -Wl,-rpath,"\$ORIGIN/../lib:" 

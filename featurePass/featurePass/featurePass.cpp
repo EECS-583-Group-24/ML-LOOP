@@ -114,7 +114,7 @@ namespace
                     if(callInst != nullptr) {
                         if (Function *calledFunction = callInst->getCalledFunction()) {
                             if (calledFunction->getName() == F.getName()) {
-                                errs() << "Recursive function detected\n";
+                                // errs() << "Recursive function detected\n";
                                 recursiveCount++;
                             }
                         }
@@ -212,7 +212,7 @@ namespace
             errs() << biasedBranchCount << "," << unbiasedBranchCount << ",";
 
             // Loop Features
-            errs() << loopCount << "," << format("%.3f,", averageBBPerLoop) << loopTotalStaticInstCount << ",";
+            errs() << format("%.3f,", averageBBPerLoop) << loopTotalStaticInstCount << ",";
             for (int i = 0; i < averageLoopInstCount.size(); i++)
             {
                 errs() << format("%.3f,", averageLoopInstCount[i]);
