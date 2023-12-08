@@ -4,7 +4,7 @@ import csv
 
 # Set the working directory
 directory_path = os.path.join(os.path.dirname(__file__), '../files/test/')
-output_directory_path = os.path.join(os.path.dirname(__file__))
+output_directory_path = os.path.join(os.path.dirname(__file__), '../scripts/temp/')
 csv_file_path = os.path.join(directory_path, 'features.csv')
 loop_csv_file_path = os.path.join(directory_path, 'loop_features.csv')
 final_csv_file_path = os.path.join(output_directory_path, 'final_test_features.csv')

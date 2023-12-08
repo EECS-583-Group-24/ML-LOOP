@@ -1,16 +1,17 @@
 import csv
 
 # Merge All Datasets (Final_features.csv, final_loop_features.csv, best_optimization_pass.csv)
-with open('final_features.csv', 'r') as f:
+with open('./temp/final_features.csv', 'r') as f:
     reader = csv.reader(f)
     df1 = list(reader)
 
-# Read the data from the second CSV file
-with open('best_optimization_results.csv', 'r') as f:
+
+with open('./temp/final_loop_features.csv', 'r') as f:
     reader = csv.reader(f)
     df2 = list(reader)
 
-with open('final_loop_features.csv', 'r') as f:
+# Read the data from the second CSV file
+with open('./temp/best_optimization_results.csv', 'r') as f:
     reader = csv.reader(f)
     df3 = list(reader)
 
@@ -23,6 +24,6 @@ for row1 in df1[1:]:
                 mergeddf.append(row1 + row2[1:] + row3[1:])  # Merge the rows
 
 # Write the merged data to a new CSV file
-with open('../mlModel/test.csv', 'w', newline='') as f:
+with open('../mlModel/training.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     writer.writerows(mergeddf)

@@ -137,7 +137,7 @@ def createDataset(directory):
             results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
 
     # Write optimization results to a CSV file
-    with open("best_optimization_results.csv", mode='w', newline='') as file:
+    with open("./temp/best_optimization_results.csv", mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
         writer.writerows(results)

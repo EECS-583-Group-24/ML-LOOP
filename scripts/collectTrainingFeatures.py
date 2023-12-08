@@ -4,7 +4,7 @@ import csv
 
 # Set the working directory
 directory_path = os.path.join(os.path.dirname(__file__), '../files/simple/')
-output_directory_path = os.path.join(os.path.dirname(__file__))
+output_directory_path = os.path.join(os.path.dirname(__file__), '../scripts/temp/')
 csv_file_path = os.path.join(directory_path, 'features.csv')
 loop_csv_file_path = os.path.join(directory_path, 'loop_features.csv')
 final_csv_file_path = os.path.join(output_directory_path, 'final_features.csv')
@@ -30,7 +30,7 @@ for line in lines:
     if line.startswith('Output for'):
         # Extract the filename
         current_file = line.split('Output for ')[1].strip().rstrip(':')
-        file_data[current_file] = []
+        file_data[current_file] = [0] * 30
     else:
         # Split the line into individual floats
         integers = [float(num) for num in line.strip().split(',') if num != '']
@@ -123,7 +123,7 @@ for line in lines:
     if line.startswith('Output for'):
         # Extract the filename
         current_file = line.split('Output for ')[1].strip().rstrip(':')
-        file_data[current_file] = []
+        file_data[current_file] = [0] * 5
     else:
         # Split the line into individual floats
         integers = [float(num) for num in line.strip().split(',') if num != '']
