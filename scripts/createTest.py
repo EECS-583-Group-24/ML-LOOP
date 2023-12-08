@@ -1,11 +1,11 @@
 import csv
 
 # Merge All Datasets (Final_features.csv, final_loop_features.csv, best_optimization_pass.csv)
-with open('final_test_features.csv', 'r') as f:
+with open('./temp/final_test_features.csv', 'r') as f:
     reader = csv.reader(f)
     df1 = list(reader)
 
-with open('final_test_loop_features.csv', 'r') as f:
+with open('./temp/final_test_loop_features.csv', 'r') as f:
     reader = csv.reader(f)
     df2 = list(reader)
 
