@@ -15,7 +15,7 @@ with open('training.csv', newline='') as csvfile:
 
 # Extract features and target variable (Best Opt Passes)
 X = [list(map(float, row[1:-2])) for row in features]  # Features (excluding Function Name, Best Times, and Best Opt Passes)
-y = [int(row[-1]) for row in features]  # Target variable (Best Opt Passes)
+y = [float(row[-1]) for row in features]  # Target variable (Best Opt Passes)
 
 # print(len(X[0]))
 
