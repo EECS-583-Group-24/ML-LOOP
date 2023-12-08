@@ -212,7 +212,7 @@ namespace
             errs() << biasedBranchCount << "," << unbiasedBranchCount << ",";
 
             // Loop Features
-            errs() << format("%.3f,", averageBBPerLoop) << loopTotalStaticInstCount << ",";
+            errs() << loopCount << format("%.3f,", averageBBPerLoop) << loopTotalStaticInstCount << ",";
             for (int i = 0; i < averageLoopInstCount.size(); i++)
             {
                 errs() << format("%.3f,", averageLoopInstCount[i]);
