@@ -33,6 +33,7 @@ for line in lines:
     else:
         # Split the line into individual floats
         integers = [float(num) for num in line.strip().split(',') if num != '']
+        print(integers)
         if integers:
             # If data exists, add it to the corresponding file entry in the dictionary
             if len(file_data[current_file]) == 0:
@@ -40,8 +41,62 @@ for line in lines:
             else:
                 # Add corresponding integers together
                 for i in range(len(integers)):
-                    file_data[current_file][i] += integers[i]
-                # TODO: Figure out how to do averages
+                    # Store old total inst for average calc
+                    if i == 0:
+                        oldTotalInstBB = file_data[current_file][1] * file_data[current_file][0]
+                        print("Old Total Inst BB: ",oldTotalInstBB)
+                    # Store old loop count for average calc
+                    if i == 21:
+                        oldLoopBB = file_data[current_file][21] * file_data[current_file][22]
+                        oldLoopIntALU = file_data[current_file][21] * file_data[current_file][24]
+                        oldLoopFpALU = file_data[current_file][21] * file_data[current_file][25]
+                        oldLoopMem = file_data[current_file][21] * file_data[current_file][26]
+                        oldLoopBranch = file_data[current_file][21] * file_data[current_file][27]
+                        oldLoopOther = file_data[current_file][21] * file_data[current_file][28]
+
+                    if i == 1: # AverageInstPerBB
+                        newTotalInstPerBB = oldTotalInstBB + (integers[1] * integers[0])
+                        file_data[current_file][1] = newTotalInstPerBB / file_data[current_file][0]
+                    elif i == 22:
+                        newLoopBB = oldLoopBB + (integers[21] * integers[22])
+                        if newLoopBB == 0:
+                            file_data[current_file][22] = 0
+                        else:
+                            file_data[current_file][22] = newLoopBB / file_data[current_file][21]
+                            
+                    elif i == 24:
+                        newLoopIntALU = oldLoopIntALU + (integers[21] * integers[24])
+                        if newLoopIntALU == 0:
+                            file_data[current_file][24] = 0
+                        else:
+                            file_data[current_file][24] = newLoopIntALU / file_data[current_file][21]
+                    elif i == 25:
+                        newLoopFpALU = oldLoopFpALU + (integers[21] * integers[25])
+                        if newLoopFpALU == 0:
+                            file_data[current_file][25] = 0
+                        else:
+                            file_data[current_file][25] = newLoopFpALU / file_data[current_file][21]
+                    elif i == 26:
+                        newLoopMem = oldLoopMem + (integers[21] * integers[26])
+                        if newLoopMem == 0:
+                            file_data[current_file][26] = 0
+                        else:
+                            file_data[current_file][26] = newLoopMem / file_data[current_file][21]
+                    elif i == 27:
+                        newLoopBranch = oldLoopBranch + (integers[21] * integers[27])
+                        if newLoopBranch == 0:
+                            file_data[current_file][27] = 0
+                        else:
+                            file_data[current_file][27] = newLoopBranch / file_data[current_file][21]
+                    elif i == 28:
+                        newLoopOther = oldLoopOther + (integers[21] * integers[28])
+                        if newLoopOther == 0:
+                            file_data[current_file][28] = 0
+                        else:
+                            file_data[current_file][28] = newLoopOther / file_data[current_file][21]
+                    else:
+                        file_data[current_file][i] += integers[i]    
+
 
 # Write aggregated data to the final_features.csv file
 with open(final_csv_file_path, 'w') as output_file:
@@ -85,3 +140,6 @@ with open(final_loop_csv_file_path, 'w') as output_file:
     output_file.write("numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef,deepestDepth\n")
     for file, data in file_data.items():
         output_file.write(f"{file},{','.join(map(str, data))}\n")
+
+
+# Merge All Datasets (Final_features.csv, final_loop_features.csv, best_optimization_pass.csv)
