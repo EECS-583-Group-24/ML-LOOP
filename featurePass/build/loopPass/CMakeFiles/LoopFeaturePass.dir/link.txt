@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC  -Wl,-rpath-link,  -Wl,--gc-sections -shared  -o LoopFeaturePass.so CMakeFiles/LoopFeaturePass.dir/loopPass.cpp.o  -Wl,-rpath,"\$ORIGIN/../lib:" 
