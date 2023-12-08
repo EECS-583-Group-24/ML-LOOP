@@ -153,8 +153,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
     createDataset(args.td)
 
-# Write optimization results to a CSV file
-with open("best_optimization_results.csv", mode='w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
-    writer.writerows(results)
