@@ -99,10 +99,10 @@ for input_file in test_files:
                 break
         
     # Compile test file with different optimization levels (O1, O2, O3)
-    for opt_level in range(1, 4):
-        timing = compile_test_file_with_optimization_level(input_file, opt_level)
-        # Update the results list with the timings for O1, O2, and O3
-        results.append([input_file, f"-O{opt_level}", timing])
+    # for opt_level in range(1, 4):
+    #     timing = compile_test_file_with_optimization_level(input_file, opt_level)
+    #     # Update the results list with the timings for O1, O2, and O3
+    #     results.append([input_file, f"-O{opt_level}", timing])
         
     results.append([input_file, lowest_times[0], best_opts[0]])  # Save a copy of best_opts to avoid mutation
 
@@ -111,5 +111,3 @@ with open("best_optimization_results.csv", mode='w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
     writer.writerows(results)
-    
-# run_LLVM_pass_on_files(test_files, test_directory, test_directory)

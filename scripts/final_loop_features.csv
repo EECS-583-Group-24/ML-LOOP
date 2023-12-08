@@ -1,4 +1,4 @@
-numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef,deepestDepth
+filename,numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef,deepestDepth
 adpcm-test.c,0.0,18.0,1.0,1.0,1.0
 bs.c,0.0,1.0,1.0,1.0,1.0
 crc.c,0.0,3.0,1.0,1.0,1.0

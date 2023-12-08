@@ -1,5 +1,6 @@
 import os
 import subprocess
+import csv
 
 # Set the working directory
 directory_path = os.path.join(os.path.dirname(__file__), '../files/simple/')
@@ -137,9 +138,6 @@ for line in lines:
 
 # Write aggregated data to the final_features.csv file
 with open(final_loop_csv_file_path, 'w') as output_file:
-    output_file.write("numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef,deepestDepth\n")
+    output_file.write("filename,numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef,deepestDepth\n")
     for file, data in file_data.items():
         output_file.write(f"{file},{','.join(map(str, data))}\n")
-
-
-# Merge All Datasets (Final_features.csv, final_loop_features.csv, best_optimization_pass.csv)
