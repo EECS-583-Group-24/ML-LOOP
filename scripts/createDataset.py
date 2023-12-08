@@ -77,7 +77,7 @@ def compile_test_file_with_optimization_level(input_file, optimization_level):
 # List to store results
 results = []
 # Number of optimization passes to store
-store_size = 5
+store_size = 1
 #TODO: Fix this/refactor this
 
 # Get Best Optimization Patterns for each test case
@@ -104,7 +104,7 @@ for input_file in test_files:
         # Update the results list with the timings for O1, O2, and O3
         results.append([input_file, f"-O{opt_level}", timing])
         
-    results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
+    results.append([input_file, lowest_times[0], best_opts[0]])  # Save a copy of best_opts to avoid mutation
 
 # Write optimization results to a CSV file
 with open("best_optimization_results.csv", mode='w', newline='') as file:
