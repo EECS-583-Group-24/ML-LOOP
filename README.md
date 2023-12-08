@@ -2,7 +2,10 @@
 
 This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Project.
 
-## Use
+## Instructions (simple)
+1. Run scripts/runEntireWorkflow.py
+
+## Instructions (manual)
 
 1. Make sure you build the featurePass with CMake in a "build" directory with "cmake ..". In this build directory, run "make" in featurePass/build/featurePass and featurePass/build/loopPass
     "featurePass" contains a function pass that collects several features.
