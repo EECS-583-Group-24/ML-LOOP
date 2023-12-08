@@ -3,6 +3,7 @@ import os
 import itertools
 import timeit
 import csv
+import argparse
 
 def get_last_decimal(file_path):
     try:
@@ -28,7 +29,7 @@ def get_last_decimal(file_path):
         print(f"An error occurred: {str(e)}")
     return -1
 def timed_run(executable_file, terminal:bool=False):
-    if terminal:
+    if not terminal:
         start_time = timeit.default_timer()
         subprocess.run([executable_file])
         return timeit.default_timer() - start_time  
@@ -38,37 +39,30 @@ def timed_run(executable_file, terminal:bool=False):
         return get_last_decimal("time_out.txt")                     
 
 # Function to compile test file with optimization sequence
-def compile_test_file_with_optimization(input_file, opt_sequence):
-    
-    # Create a directory based on the input file name
-    output_dir = os.path.join("output", os.path.splitext(input_file)[0])
-    os.makedirs(output_dir, exist_ok=True)
-    
-    non_optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -Xclang -disable-O0-optnone -o {non_optimized_file}", shell=True)
+def compile_test_file_with_optimization(input_file, opt_sequence,test_directory,perm_id, non_optimized_file, output_dir):
     
     # Join the list elements into a single string
     opt_flags = ' '.join(opt_sequence)
     
     # Formulate the output file path within the directory
-    optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_permutations.index(opt_sequence)+1}.ll")
+    optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{perm_id}.ll")
 
     # Execute the opt command and place the output file in the directory
     subprocess.run(f"opt --targetlibinfo --tti --tbaa --scoped-noalias-aa --assumption-cache-tracker --profile-summary-info --called-value-propagation --domtree --basic-aa --aa --loops --lazy-branch-prob --lazy-block-freq --opt-remark-emitter --basiccg --memoryssa --early-cse-memssa --speculative-execution --lazy-value-info --correlated-propagation --libcalls-shrinkwrap --lcssa-verification --scalar-evolution --simple-loop-unswitch --memdep --postdomtree --loop-distribute --loop-load-elim --loop-sink --instsimplify --div-rem-pairs --verify --early-cse --lower-expect --elim-avail-extern --callsite-splitting {opt_flags} {non_optimized_file} -o {optimized_file}", shell=True)
     
     # Formulate the output executable file path
-    executable_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{optimization_permutations.index(opt_sequence)+1}")
+    executable_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_{perm_id}")
     # Compile the optimized LLVM IR file into an executable
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
     
     # Measure execution time of the executable
-    execution_time=timed_run(executable_file,false)
+    execution_time=timed_run(executable_file,False)
 
-    print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
+    print(f"Execution time for {input_file} with {perm_id}: {execution_time:.8f} seconds")
     return execution_time
 
 
-def compile_test_file_with_optimization_level(input_file, optimization_level):
+def compile_test_file_with_optimization_level(input_file, optimization_level,test_directory):
     # Create a directory based on the input file name
     output_dir = os.path.join("output", os.path.splitext(input_file)[0])
     os.makedirs(output_dir, exist_ok=True)
@@ -87,15 +81,14 @@ def compile_test_file_with_optimization_level(input_file, optimization_level):
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
 
     # Measure execution time of the compiled LLVM IR file
-    execution_time=timed_run(executable_file,false)
+    execution_time=timed_run(executable_file,False)
 
     print(f"Execution time for {input_file} with -O{optimization_level}: {execution_time:.8f} seconds")
     return execution_time
 
-def createDataset(test_directory):
+def createDataset(directory):
     # Directory containing test files 
-    test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../files/simple'))
-
+    test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), directory))
     # Fetch all C/C++ files in the test directory
     test_files = [file for file in os.listdir(test_directory) if file.endswith(('.c', '.cpp'))]
 
@@ -116,11 +109,15 @@ def createDataset(test_directory):
         print(f"Processing {input_file}...")
         best_opts = [0] * store_size  # Store the best five optimization passes for each file
         lowest_times = [float('inf')] * store_size  # Keep track of the lowest times for the best five passes
-
+        # Create a directory based on the input file name
+        output_dir = os.path.join("output", os.path.splitext(input_file)[0])
+        os.makedirs(output_dir, exist_ok=True)
+        non_optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_0_non_optimized.ll")
+        subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -Xclang -disable-O0-optnone -o {non_optimized_file}", shell=True)
         for opt_sequence in optimization_permutations:
             pass_id = optimization_permutations.index(opt_sequence) + 1
             print(f"Testing opt sequence #{pass_id} for {input_file} ...")
-            timing = compile_test_file_with_optimization(input_file, opt_sequence)
+            timing = compile_test_file_with_optimization(input_file, opt_sequence,test_directory,pass_id,non_optimized_file,output_dir)
 
             # Update the best five passes and their execution times
             for i, time in enumerate(lowest_times):
@@ -149,7 +146,7 @@ def createDataset(test_directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
-    parser.add_argument('--td', required=False,default=,type=int,help="test directory")
+    parser.add_argument('--dir', required=False,default="../files/simple",help="realtive path to test directory")
     args = parser.parse_args()
-    createDataset(args.td)
+    createDataset(args.dir)
 
