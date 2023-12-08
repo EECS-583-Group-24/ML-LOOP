@@ -5,12 +5,13 @@ with open('./temp/final_features.csv', 'r') as f:
     reader = csv.reader(f)
     df1 = list(reader)
 
-# Read the data from the second CSV file
-with open('./temp/best_optimization_results.csv', 'r') as f:
+
+with open('./temp/final_loop_features.csv', 'r') as f:
     reader = csv.reader(f)
     df2 = list(reader)
 
-with open('./temp/final_loop_features.csv', 'r') as f:
+# Read the data from the second CSV file
+with open('./temp/best_optimization_results.csv', 'r') as f:
     reader = csv.reader(f)
     df3 = list(reader)
 
