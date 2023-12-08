@@ -16,6 +16,29 @@ with open('optimization_permutations.txt', 'r') as file:
         row = line.strip().split(',')  # Split each line by commas (or another delimiter)
         optimization_permutations.append(row)
 
+def get_last_decimal(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if lines:
+                last_line = lines[-1].strip()
+                decimals = re.findall(r'\d+\.\d+', last_line)
+                if decimals:
+                    return decimals[-1]
+                else:
+                    print("No decimal found in the last line.")
+            else:
+                print("The file is empty.")
+
+        # Delete the file after reading
+        os.remove(file_path)
+        print(f"File '{file_path}' has been deleted.")
+
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+    return -1
 
 # Function to compile test file with optimization sequence
 def compile_test_file_with_optimization(input_file, opt_sequence):
@@ -42,9 +65,12 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
     
     # Measure execution time of the executable
+    timer=f"{{time {executable_file};}} 2> time_out.txt"
     start_time = timeit.default_timer()
-    subprocess.run([executable_file])  # Execute the generated executable
-    execution_time = timeit.default_timer() - start_time
+    subprocess.run(timer,shell=True)  # Execute the generated executable
+    execution_time=get_last_decimal("time_out.txt")
+    #execution_time = timeit.default_timer() - start_time
+
     print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
     return execution_time
 
