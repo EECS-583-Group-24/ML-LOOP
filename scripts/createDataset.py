@@ -27,6 +27,15 @@ def get_last_decimal(file_path):
     except Exception as e:
         print(f"An error occurred: {str(e)}")
     return -1
+def timed_run(executable_file, terminal:bool=False):
+    if terminal:
+        start_time = timeit.default_timer()
+        subprocess.run([executable_file])
+        return timeit.default_timer() - start_time  
+    else:
+        timer=f"{{time {executable_file};}} 2> time_out.txt"
+        subprocess.run(timer,shell=True)  # Execute the generated executable
+        return get_last_decimal("time_out.txt")                     
 
 # Function to compile test file with optimization sequence
 def compile_test_file_with_optimization(input_file, opt_sequence):
@@ -53,11 +62,7 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
     
     # Measure execution time of the executable
-    timer=f"{{time {executable_file};}} 2> time_out.txt"
-    start_time = timeit.default_timer()
-    subprocess.run(timer,shell=True)  # Execute the generated executable
-    execution_time=get_last_decimal("time_out.txt")
-    #execution_time = timeit.default_timer() - start_time
+    execution_time=timed_run(executable_file,false)
 
     print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
     return execution_time
@@ -82,9 +87,8 @@ def compile_test_file_with_optimization_level(input_file, optimization_level):
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
 
     # Measure execution time of the compiled LLVM IR file
-    start_time = timeit.default_timer()
-    subprocess.run([executable_file])
-    execution_time = timeit.default_timer() - start_time
+    execution_time=timed_run(executable_file,false)
+
     print(f"Execution time for {input_file} with -O{optimization_level}: {execution_time:.8f} seconds")
     return execution_time
 
@@ -104,7 +108,7 @@ def createDataset(test_directory):
     # List to store results
     results = []
     # Number of optimization passes to store
-    store_size = 5
+    store_size = 1
     #TODO: Fix this/refactor this
 
     # Get Best Optimization Patterns for each test case
@@ -130,8 +134,10 @@ def createDataset(test_directory):
             timing = compile_test_file_with_optimization_level(input_file, opt_level)
             # Update the results list with the timings for O1, O2, and O3
             results.append([input_file, f"-O{opt_level}", timing])
-            
-        results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
+        if(store_size==1):
+            results.append([input_file, lowest_times[0], best_opts[:][0]])
+        else:
+            results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
 
     # Write optimization results to a CSV file
     with open("best_optimization_results.csv", mode='w', newline='') as file:
