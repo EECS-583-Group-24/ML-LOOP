@@ -30,7 +30,7 @@ for line in lines:
     if line.startswith('Output for'):
         # Extract the filename
         current_file = line.split('Output for ')[1].strip().rstrip(':')
-        file_data[current_file] = []
+        file_data[current_file] = [0] * 30
     else:
         # Split the line into individual floats
         integers = [float(num) for num in line.strip().split(',') if num != '']
@@ -123,7 +123,7 @@ for line in lines:
     if line.startswith('Output for'):
         # Extract the filename
         current_file = line.split('Output for ')[1].strip().rstrip(':')
-        file_data[current_file] = []
+        file_data[current_file] = [0] * 5
     else:
         # Split the line into individual floats
         integers = [float(num) for num in line.strip().split(',') if num != '']
