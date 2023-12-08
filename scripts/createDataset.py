@@ -4,18 +4,6 @@ import itertools
 import timeit
 import csv
 
-# Directory containing test files 
-test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../files/simple'))
-
-# Fetch all C/C++ files in the test directory
-test_files = [file for file in os.listdir(test_directory) if file.endswith(('.c', '.cpp'))]
-
-optimization_permutations = []
-with open('optimization_permutations.txt', 'r') as file:
-    for line in file:
-        row = line.strip().split(',')  # Split each line by commas (or another delimiter)
-        optimization_permutations.append(row)
-
 def get_last_decimal(file_path):
     try:
         with open(file_path, 'r') as file:
@@ -100,42 +88,61 @@ def compile_test_file_with_optimization_level(input_file, optimization_level):
     print(f"Execution time for {input_file} with -O{optimization_level}: {execution_time:.8f} seconds")
     return execution_time
 
-# List to store results
-results = []
-# Number of optimization passes to store
-store_size = 5
-#TODO: Fix this/refactor this
+def createDataset(test_directory):
+    # Directory containing test files 
+    test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), '../files/simple'))
 
-# Get Best Optimization Patterns for each test case
-for input_file in test_files:
-    print(f"Processing {input_file}...")
-    best_opts = [0] * store_size  # Store the best five optimization passes for each file
-    lowest_times = [float('inf')] * store_size  # Keep track of the lowest times for the best five passes
+    # Fetch all C/C++ files in the test directory
+    test_files = [file for file in os.listdir(test_directory) if file.endswith(('.c', '.cpp'))]
 
-    for opt_sequence in optimization_permutations:
-        pass_id = optimization_permutations.index(opt_sequence) + 1
-        print(f"Testing opt sequence #{pass_id} for {input_file} ...")
-        timing = compile_test_file_with_optimization(input_file, opt_sequence)
+    optimization_permutations = []
+    with open('optimization_permutations.txt', 'r') as file:
+        for line in file:
+            row = line.strip().split(',')  # Split each line by commas (or another delimiter)
+            optimization_permutations.append(row)
 
-        # Update the best five passes and their execution times
-        for i, time in enumerate(lowest_times):
-            if timing < time:
-                lowest_times[i] = timing
-                best_opts[i] = pass_id
-                break
+    # List to store results
+    results = []
+    # Number of optimization passes to store
+    store_size = 5
+    #TODO: Fix this/refactor this
+
+    # Get Best Optimization Patterns for each test case
+    for input_file in test_files:
+        print(f"Processing {input_file}...")
+        best_opts = [0] * store_size  # Store the best five optimization passes for each file
+        lowest_times = [float('inf')] * store_size  # Keep track of the lowest times for the best five passes
+
+        for opt_sequence in optimization_permutations:
+            pass_id = optimization_permutations.index(opt_sequence) + 1
+            print(f"Testing opt sequence #{pass_id} for {input_file} ...")
+            timing = compile_test_file_with_optimization(input_file, opt_sequence)
+
+            # Update the best five passes and their execution times
+            for i, time in enumerate(lowest_times):
+                if timing < time:
+                    lowest_times[i] = timing
+                    best_opts[i] = pass_id
+                    break
+            
+        # Compile test file with different optimization levels (O1, O2, O3)
+        for opt_level in range(1, 4):
+            timing = compile_test_file_with_optimization_level(input_file, opt_level)
+            # Update the results list with the timings for O1, O2, and O3
+            results.append([input_file, f"-O{opt_level}", timing])
+            
+        results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
+
+    # Write optimization results to a CSV file
+    with open("best_optimization_results.csv", mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
+        writer.writerows(results)
         
-    # Compile test file with different optimization levels (O1, O2, O3)
-    for opt_level in range(1, 4):
-        timing = compile_test_file_with_optimization_level(input_file, opt_level)
-        # Update the results list with the timings for O1, O2, and O3
-        results.append([input_file, f"-O{opt_level}", timing])
-        
-    results.append([input_file, lowest_times, best_opts[:]])  # Save a copy of best_opts to avoid mutation
-
-# Write optimization results to a CSV file
-with open("best_optimization_results.csv", mode='w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(["filename", f"Best {store_size} Times", f"Best {store_size} Opt Passes"])
-    writer.writerows(results)
-    
-# run_LLVM_pass_on_files(test_files, test_directory, test_directory)
+    # run_LLVM_pass_on_files(test_files, test_directory, test_directory)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    #Setup
+    parser.add_argument('--td', required=False,default=,type=int,help="test directory")
+    args = parser.parse_args()
+    createDataset(args.td)
