@@ -4,3 +4,6 @@
 */CMakeCache.txt 
 */CMakeLists.txt 
 */Makefile
+*/CMakeFiles/*
+/scripts/output
+/files/simple/temp

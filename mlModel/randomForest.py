@@ -3,8 +3,6 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
 
-
-
 # Initialize empty lists to store features and target variable
 features = [] # [Function Name, Total Dynamic Operations, Integer ALU Ratio, Floating-point ALU Ratio, Memory Ratio, Biased Branch Ratio, Unbiased Branch Ratio, Other Operations Ratio, Best Opt Passes]
 
