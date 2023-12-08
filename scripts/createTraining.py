@@ -23,6 +23,6 @@ for row1 in df1[1:]:
                 mergeddf.append(row1 + row2[1:] + row3[1:])  # Merge the rows
 
 # Write the merged data to a new CSV file
-with open('training.csv', 'w', newline='') as f:
+with open('../mlModel/test.csv', 'w', newline='') as f:
     writer = csv.writer(f)
     writer.writerows(mergeddf)
