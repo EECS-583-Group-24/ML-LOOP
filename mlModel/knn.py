@@ -34,7 +34,7 @@ knn_model.fit(X_normalized, y)
 
 
 testing_features = []
-with open('test_features.csv', newline='') as csvfile:
+with open('test.csv', newline='') as csvfile:
     reader = csv.reader(csvfile)
     headers = next(reader)  # Skip header row
     for row in reader:
