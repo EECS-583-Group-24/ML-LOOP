@@ -41,11 +41,10 @@ with open('test_features.csv', newline='') as csvfile:
         testing_features.append(row)
 
 # Extract features and target variable (Best Opt Passes)
-X = [list(map(float, row[1:])) for row in testing_features]  # Features (excluding Function Name, Best Times, and Best Opt Passes)
-
+X = [list(map(float, row[1:])) for row in testing_features]  # Features
 # Predict the best optimization sequence for a new code file (new_file_features is a list of features for the new code file)
 for i in range(len(testing_features)):
-    new_file_features = X[0]  # Example features for the new code file
+    new_file_features = X[i]  # Example features for the new code file
     normalized_new_file_features = scaler.transform([new_file_features])  # Normalize the new file features
 
     predicted_opt_sequence = int(round(knn_model.predict(normalized_new_file_features)[0]))

@@ -1,2 +1,4 @@
 filename,total_count,br_count,switch_count,indirectbr_count,add_count,sub_count,mul_count,udiv_count,sdiv_count,urem_count,shl_count,lshr_count,ashr_count,and_count,or_count,xor_count,icmp_count,srem_count,fadd_count,fsub_count,fmul_count,fdiv_count,frem_count,fcmp_count,alloca_count,load_count,store_count,getelementptr_count,fence_count,atomiccmpxchg_count,atomicrmw_count,other_count,biased_branch_count,unbiased_branch_count
 select.c,2043,162,0,0,146,11,0,0,0,0,0,15,0,0,0,33,97,0,0,0,0,0,0,65,11,832,237,311,0,0,0,3,205,77
+jfdctint.c,4752,83,0,0,656,112,256,0,0,0,16,0,112,0,0,0,83,64,0,0,0,0,0,0,24,1843,809,464,0,0,0,67,246,0
+insertsort.c,1799,64,0,0,54,144,0,0,0,0,0,0,0,0,0,0,64,0,0,0,0,0,0,0,5,605,211,299,0,0,0,289,128,0
