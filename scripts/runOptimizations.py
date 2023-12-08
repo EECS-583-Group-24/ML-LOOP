@@ -144,7 +144,7 @@ def createDataset(directory):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
-    parser.add_argument('--dir', required=False,default="../files/simple",help="realtive path to test directory")
+    parser.add_argument('training_dir',help="realtive path to test directory")
     args = parser.parse_args()
-    createDataset(args.dir)
+    createDataset(args.training_dir)
 
