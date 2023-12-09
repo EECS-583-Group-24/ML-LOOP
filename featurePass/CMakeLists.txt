@@ -9,3 +9,4 @@ include_directories(${LLVM_INCLUDE_DIRS})
 
 add_subdirectory(featurePass)
 add_subdirectory(loopPass)
+add_subdirectory(instCountPass)
