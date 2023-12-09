@@ -8,6 +8,9 @@ test_files='../files/test/'
 temp_dir='./temp/'
 output_dir='../mlModel'
 training_output='../temp/best_optimization_results.csv'
+
+# Workflow: Create FeaturePass.so -> generatePermutations.py -> runOptimizations.py -> collectFeatures.py -> combineFeatures.py
+
 # Create FeaturePass.so executable
 subprocess.run(['cmake', '..'], cwd=directory_path)
 subprocess.run(['make'], cwd=directory_path)
@@ -15,7 +18,6 @@ subprocess.run(['make'], cwd=directory_path)
 # Run generatePermutations.py
 subprocess.run(['python3', 'generatePermutations.py'])
 
-# runOptimizations.py - >collectTrainingFeatures.py -> collectTestFeatures.py -> createTraining.py -> createTest.py
 #Training
 subprocess.run(['python3', 'runOptimizations.py', training_files])
 subprocess.run(['python3', 'collectFeatures.py', 'training', training_files])
