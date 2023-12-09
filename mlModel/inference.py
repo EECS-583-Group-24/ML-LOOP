@@ -103,7 +103,10 @@ def profile(test_directory, n):
     #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        [writer.writerow(out) for out in output] 
+        writer.writerow(['Filename'] + headers[1:] + ['O3'])  # Write header row
+        for out in output:
+            out.insert(0,filename)
+            writer.writerow(out)
 
     return 
 '''
