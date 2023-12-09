@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define SIZE 1500
+#define SIZE 5
 
 int main()
 {
@@ -33,7 +33,7 @@ int main()
     }
   }
   
-  fprintf(stdout,"%d\n", result);
+  //fprintf(stdout,"%d\n", result);
 
   return 0;
 }

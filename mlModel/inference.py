@@ -3,6 +3,7 @@ import argparse
 import csv
 import subprocess
 import timeit
+import statistics
 '''
     SETUP PARAMETERS
 '''
@@ -17,14 +18,14 @@ model_output='./predictions.csv'
 '''
 '''Times executation of n runs and returns average'''
 def run_time_executable(executable,n):
-    total=0
-    for i in range(n):
+    times = []
+    for _ in range(n):
         start_time = timeit.default_timer()
         subprocess.run([executable])  # Execute the generated executable
         execution_time = timeit.default_timer() - start_time
-        total=total+execution_time
-    average=total/n
-    return average
+        times.append(execution_time)
+        median_time = statistics.median(times)
+    return median_time
 '''Generates llvm_ir and output directory from c file'''
 def generate_bytecode(test_directory, filename):
     # Create a directory based on the input file name
@@ -82,12 +83,14 @@ def profile(test_directory, n):
             row = line.strip().split(',') 
             optimization_permutations.append(row)
     #Gathers performance Output
-    output=[]                   
+    output=[]
+    filenames=[]                   
     with open(model_output, newline='') as csvfile:
         reader = csv.reader(csvfile)
         headers = next(reader)  # Skip header row
         for row in reader:
             filename = row[0]
+            filenames.append(filename)
             times=[filename]
             # Profile each optimization sequence
             llvm_ir,output_dir=generate_bytecode(test_directory,filename)
@@ -104,8 +107,8 @@ def profile(test_directory, n):
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Filename'] + headers[1:] + ['O3'])  # Write header row
-        for out in output:
-            out.insert(0,filename)
+        for i, out in enumerate(output):
+            out.insert(0,filenames[i])
             writer.writerow(out)
 
     return 
@@ -117,4 +120,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../files/test',1000)
+    profile('../files/test',100)
