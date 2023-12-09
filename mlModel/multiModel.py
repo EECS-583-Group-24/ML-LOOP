@@ -47,12 +47,12 @@ def run_models():
         if model_name == 'Random Number':
             # Generate a random number between 0 and 120 for each test file
             for i in range(len(testing_features)):
-            predicted_opt_sequence = random.randint(0, 120)
-            filename = testing_features[i][0]
-            if filename not in results:
-                results[filename] = {}
-            results[filename][model_name] = predicted_opt_sequence
-            print(f"Predicted Best Opt Sequence for the {testing_features[i][0]} using {model_name}: {predicted_opt_sequence}")
+                predicted_opt_sequence = random.randint(0, 120)
+                filename = testing_features[i][0]
+                if filename not in results:
+                    results[filename] = {}
+                results[filename][model_name] = predicted_opt_sequence
+                print(f"Predicted Best Opt Sequence for the {testing_features[i][0]} using {model_name}: {predicted_opt_sequence}")
         else:
             print(f"\nTraining {model_name}...")
             model.fit(X_normalized, y)
