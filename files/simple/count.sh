@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the path to the library and pass name
-PATH2LIB="../../featurePass/build/instCountPass/InstCountPass.so"
+PATH2LIB="../../featurePass/build/featurePass/FeaturePass.so"
 PASS=icp
 
 rm -f paper_features.csv

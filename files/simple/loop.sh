@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the path to the library and pass name
-PATH2LIB="../../featurePass/build/loopPass/LoopFeaturePass.so"
+PATH2LIB="../../featurePass/build/featurePass/FeaturePass.so"
 PASS=lnp
 
 rm -f loop_features.csv
