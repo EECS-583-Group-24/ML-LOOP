@@ -1,5 +1,6 @@
 import csv
 import argparse
+import random
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor
 from sklearn.svm import SVR
@@ -16,7 +17,8 @@ def run_models():
         ('SVR RBF', SVR(kernel='rbf')),
         ('KNN', KNeighborsRegressor(n_neighbors=1)),
         ('Gradient Boosting', GradientBoostingRegressor(random_state=0)),
-        ('AdaBoost', AdaBoostRegressor(random_state=0))
+        ('AdaBoost', AdaBoostRegressor(random_state=0)),
+        ('Random Number', 'Random')  # Add a "model" that generates a random number between 0 and 120
     ]
 
     # Initialize empty lists to store features and target variable
@@ -42,33 +44,43 @@ def run_models():
 
     # Train each model and make predictions
     for model_name, model in models:
-        print(f"\nTraining {model_name}...")
-        model.fit(X_normalized, y)
-
-        testing_features = []
-        with open(test_file, newline='') as csvfile:
-            reader = csv.reader(csvfile)
-            headers = next(reader)  # Skip header row
-            for row in reader:
-                testing_features.append(row)
-
-        # Extract features and target variable (Best Opt Passes)
-        X = [list(map(float, row[1:])) for row in testing_features]  # Features
-
-        # Predict the best optimization sequence for a new code file
-        for i in range(len(testing_features)):
-            new_file_features = X[i]  # Example features for the new code file
-            normalized_new_file_features = scaler.transform([new_file_features])  # Normalize the new file features
-
-            predicted_opt_sequence = int(round(model.predict(normalized_new_file_features)[0]))
-            # Ensure the predicted sequence is between 0 and 120
-            predicted_opt_sequence = max(0, min(predicted_opt_sequence, 120))
-            
+        if model_name == 'Random Number':
+            # Generate a random number between 0 and 120 for each test file
+            for i in range(len(testing_features)):
+            predicted_opt_sequence = random.randint(0, 120)
             filename = testing_features[i][0]
             if filename not in results:
                 results[filename] = {}
             results[filename][model_name] = predicted_opt_sequence
             print(f"Predicted Best Opt Sequence for the {testing_features[i][0]} using {model_name}: {predicted_opt_sequence}")
+        else:
+            print(f"\nTraining {model_name}...")
+            model.fit(X_normalized, y)
+
+            testing_features = []
+            with open(test_file, newline='') as csvfile:
+                reader = csv.reader(csvfile)
+                headers = next(reader)  # Skip header row
+                for row in reader:
+                    testing_features.append(row)
+
+            # Extract features and target variable (Best Opt Passes)
+            X = [list(map(float, row[1:])) for row in testing_features]  # Features
+
+            # Predict the best optimization sequence for a new code file
+            for i in range(len(testing_features)):
+                new_file_features = X[i]  # Example features for the new code file
+                normalized_new_file_features = scaler.transform([new_file_features])  # Normalize the new file features
+
+                predicted_opt_sequence = int(round(model.predict(normalized_new_file_features)[0]))
+                # Ensure the predicted sequence is between 0 and 120
+                predicted_opt_sequence = max(0, min(predicted_opt_sequence, 120))
+                
+                filename = testing_features[i][0]
+                if filename not in results:
+                    results[filename] = {}
+                results[filename][model_name] = predicted_opt_sequence
+                print(f"Predicted Best Opt Sequence for the {testing_features[i][0]} using {model_name}: {predicted_opt_sequence}")
 
     # Write the results to a CSV file
     with open(output_file, 'w', newline='') as csvfile:
