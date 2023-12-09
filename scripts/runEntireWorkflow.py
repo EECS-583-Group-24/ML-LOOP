@@ -2,7 +2,7 @@ import os
 import subprocess
 
 # Directory path to featurePass
-directory_path = os.path.join(os.path.dirname(__file__), '../featurePass/featurePass/')
+directory_path = os.path.join(os.path.dirname(__file__), '../featurePass/build/')
 training_files="../files/simple"
 test_files='../files/test/'
 temp_dir='./temp/'

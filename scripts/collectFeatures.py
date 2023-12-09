@@ -34,7 +34,6 @@ def script(type,directory,output_directory):
         else:
             # Split the line into individual floats
             integers = [float(num) for num in line.strip().split(',') if num != '']
-            print(integers)
             if integers:
                 # If data exists, add it to the corresponding file entry in the dictionary
                 if len(file_data[current_file]) == 0:
@@ -45,7 +44,6 @@ def script(type,directory,output_directory):
                         # Store old total inst for average calc
                         if i == 0:
                             oldTotalInstBB = file_data[current_file][1] * file_data[current_file][0]
-                            print("Old Total Inst BB: ",oldTotalInstBB)
                         # Store old loop count for average calc
                         if i == 21:
                             oldLoopBB = file_data[current_file][21] * file_data[current_file][22]

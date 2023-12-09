@@ -1,1 +1,0 @@
-add_llvm_pass_plugin(FeaturePass featurePass.cpp)
