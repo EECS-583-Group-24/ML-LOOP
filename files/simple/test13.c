@@ -1,31 +1,16 @@
 #include <stdio.h>
+int main(void) {
+  int n=2301, ans=0, d=1;
 
-int main(void)
-{
-  int x,y;
-  int d=1;
-  int i;
-  int che;
-  int min;
-  
-  x = 100;
-  y = 120;
-
-  if(x > y){
-    che = (x%y);
-    min = y;
-  }else{
-    che = (y%x);
-    min = x;
-  }
-  
-  for(i=0; i<min; i++){
-    if(((min%i) == 0) && ((che%i) == 0 )){
-      d = i;
+  for (int i=0; i<3; i++) {
+    if (n%10 == 1) {
+      ans += 9*d;
+    }else {
+      ans += d;
     }
-    
-  }  
-  printf("%d\n",d);
-  
-  return(0);
+    d *= 10;
+    n /= 10;
+  }
+  printf("%d\n", ans);
+  return 0;
 }
