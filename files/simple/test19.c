@@ -12,7 +12,7 @@ int main()
 {
 	int n;
 
-	scanf("%d", &n);
+	n = 203;
 	
 	int c = 1110 - n;
 	

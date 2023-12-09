@@ -1,10 +1,9 @@
 #include <stdio.h>
 
 int main () {
-	char str[15];
+	char str[] = "01B0B1B0B0B0BBB";
 	char modstr[15];
 	int length = 0;
-	scanf("%s", str);
 	for (int i = 0; str[i] != '\0'; i++) {
 		length++;
 	}

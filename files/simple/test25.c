@@ -5,8 +5,10 @@ int main(){
     int w,h,x,y,judge;
     float s=0.0;
 
-
-    scanf("%d %d %d %d",&w,&h,&x,&y);
+    w = 231;
+    h = 2350;
+    x = 13;
+    y = 23;
 
     s = (float)w*(float)h/2.0;
 

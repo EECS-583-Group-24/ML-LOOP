@@ -2,8 +2,7 @@
 #include<string.h>
  
 int main(){
-  char s[11];
-  s = "elevenchars"
+  char s[]="elevenchars";
  
   int j=0;
   char array[11]={'\0'};

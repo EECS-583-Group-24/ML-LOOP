@@ -6,8 +6,7 @@
 
 int main (void)
 {
-	int n;
-	scanf("%d",&n);
+	int n = 5000;
 	int *a;
 	a = (int *)malloc(sizeof(int)*(n));
 	int i = 0;
@@ -15,7 +14,7 @@ int main (void)
 	int max_i = -1;
 	while (i < n)
 	{
-		scanf("%d",&a[i]);
+		a[i] = i * a[i]
 		if(a[i] > max)
 		{
 			max = a[i];
