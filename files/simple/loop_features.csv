@@ -141,11 +141,83 @@ Output for simple.c:
 Output for sqrt.c:
 0,1,1.000,1.000,1
 
+Output for test10.c:
+0,1,1.000,1.000,1
+
+Output for test11.c:
+0,1,1.000,1.000,1
+
+Output for test12.c:
+0,1,1.000,1.000,1
+
+Output for test13.c:
+
+Output for test14.c:
+0,1,1.000,1.000,1
+0,2,1.000,1.000,1
+
+Output for test15.c:
+0,1,1.000,1.000,1
+
+Output for test16.c:
+
+Output for test17.c:
+
+Output for test18.c:
+0,1,1.000,1.000,1
+
+Output for test19.c:
+
 Output for test1.c:
 0,1,1.000,1.000,1
 0,2,1.000,1.000,1
 
+Output for test20.c:
+0,1,1.000,1.000,1
+
+Output for test21.c:
+
+Output for test22.c:
+
+Output for test23.c:
+
+Output for test24.c:
+0,1,1.000,1.000,1
+0,2,1.000,1.000,1
+
+Output for test25.c:
+
+Output for test26.c:
+0,1,1.000,1.000,1
+0,2,1.000,1.000,1
+
+Output for test27.c:
+0,1,1.000,1.000,1
+
+Output for test28.c:
+0,1,1.000,1.000,1
+0,2,1.000,1.000,1
+0,3,1.000,1.000,1
+
+Output for test29.c:
+0,1,1.000,1.000,1
+
 Output for test2.c:
+
+Output for test30.c:
+0,1,1.000,1.000,1
+
+Output for test31.c:
+0,1,2.000,2.000,2
+1,1,1.500,2.000,2
+1,2,1.333,1.500,2
+
+Output for test32.c:
+0,1,1.000,1.000,1
+0,2,1.000,1.000,1
+
+Output for test33.c:
+0,1,1.000,1.000,1
 
 Output for test3.c:
 0,1,1.000,1.000,1
@@ -154,5 +226,16 @@ Output for test4.c:
 0,1,1.000,1.000,1
 
 Output for test5.c:
+0,1,1.000,1.000,1
+
+Output for test6.c:
+0,1,1.000,1.000,1
+
+Output for test7.c:
+0,1,1.000,1.000,1
+
+Output for test8.c:
+
+Output for test9.c:
 0,1,1.000,1.000,1
 
