@@ -5,7 +5,7 @@
 # where <benchmark_name> = simple OR anagram OR compress
 
 # ACTION REQUIRED: Ensure that the path to the library and pass name are correct.
-PATH2LIB="../build/instCountPass/InstCountPass.so"
+PATH2LIB="../build/featurePass/FeaturePass.so"
 PASS=icp
 
 BENCH=src/${1}.c

@@ -5,7 +5,7 @@
 # where <benchmark_name> = simple OR anagram OR compress
 
 # ACTION REQUIRED: Ensure that the path to the library and pass name are correct.
-PATH2LIB="../build/loopPass/LoopFeaturePass.so"
+PATH2LIB="../build/featurePass/FeaturePass.so"
 PASS=lnp
 
 BENCH=src/${1}.c
