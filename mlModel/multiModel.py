@@ -1,4 +1,5 @@
 import csv
+import argparse
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor, AdaBoostRegressor
 from sklearn.svm import SVR
@@ -84,7 +85,8 @@ if __name__ == "__main__":
     parser.add_argument('--output',default='predictions.csv',help="realtive path to output file directory")
     parser.add_argument('--test',default='test.csv',help="realtive path to test files directory")
     args = parser.parse_args()
-    training_file=args.features
+    training_file=args.training
     output_file=args.output
     test_file=args.test
+    run_models()
         
