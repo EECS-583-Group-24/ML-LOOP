@@ -3,13 +3,19 @@ import argparse
 import csv
 import subprocess
 import timeit
-
+'''
+    SETUP PARAMETERS
+'''
 collect_features_script='../scripts/collectFeatures.py'
 output_dir='.'
 model='./multiModel.py'
 training_data='./training.csv'
 optimization_permutations_source='../scripts/optimization_permutations.txt'
 model_output='./predictions.csv'
+'''
+    FUNCTION TO GENERATE COMPILED CODE
+'''
+'''Times executation of n runs and returns average'''
 def run_time_executable(executable,n):
     total=0
     for i in range(n):
@@ -19,50 +25,44 @@ def run_time_executable(executable,n):
         total=total+execution_time
     average=total/n
     return average
-def compile_test_file_with_optimization(test_directory, input_file, opt_sequence,n):
-    
+'''Generates llvm_ir and output directory from c file'''
+def generate_bytecode(test_directory, filename):
     # Create a directory based on the input file name
-    output_dir = os.path.join("./temp/output", os.path.splitext(input_file)[0])
+    output_dir = os.path.join("./temp/output", os.path.splitext(filename)[0])
     os.makedirs(output_dir, exist_ok=True)
     
-    non_optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -o {non_optimized_file}", shell=True)
-    
+    llvm_ir = os.path.join(output_dir, f"{os.path.splitext(filename)[0]}_0_non_optimized.ll")
+    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, filename)} -o {llvm_ir}", shell=True)
+    return llvm_ir,output_dir
+
+'''Compiles and tests files with a optimization sequence'''
+def compile_test_file_with_optimization(output_dir, bytecode, opt_sequence,n):
+     
     # Join the list elements into a single string
     opt_flags = ' '.join(opt_sequence)
-    
-    # Formulate the output file path within the directory
-    optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}.ll")
+    optimized_file = os.path.join(output_dir, "optimized.ll")
+    executable_file = os.path.join(output_dir, "exec")
 
     # Execute the opt command and place the output file in the directory
-    subprocess.run(f"opt {opt_flags} {non_optimized_file} -o {optimized_file}", shell=True)
-    
-    # Formulate the output executable file path
-    executable_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}")
-    # Compile the optimized LLVM IR file into an executable
+    subprocess.run(f"opt {opt_flags} {bytecode} -o {optimized_file}", shell=True)
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
     
     # Measure execution time of the executable
     return run_time_executable(executable_file,n)
 
-def compile_test_file_with_optimization_level(test_directory,input_file, optimization_level,n):
-    # Create a directory based on the input file name
-    output_dir = os.path.join("./temp/output", os.path.splitext(input_file)[0])
-    os.makedirs(output_dir, exist_ok=True)
+'''Compiles and tests files with a optimization level'''
+def compile_test_file_with_optimization_level(output_dir,bytecode, optimization_level,n):
 
-    non_optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, input_file)} -o {non_optimized_file}", shell=True)
+    optimized_file = os.path.join(output_dir, f"opt_{optimization_level}.ll")
+    executable_file =  os.path.join(output_dir, f"exec_{optimization_level}")
     
-    optimized_file = os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_O{optimization_level}.ll")
-
-    subprocess.run(f"opt -O{optimization_level} {non_optimized_file} -o {optimized_file}", shell=True)
-    
-    executable_file =  os.path.join(output_dir, f"{os.path.splitext(input_file)[0]}_O{optimization_level}")
-    print(executable_file)
+    subprocess.run(f"opt -O{optimization_level} {bytecode} -o {optimized_file}", shell=True)
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
 
     return run_time_executable(executable_file,n) 
-
+'''
+    FUNCTIONS FOR FUNCTIONALITY
+'''
 def generate_features_directory(test_files):
     subprocess.run(['python3', collect_features_script, 'test', test_files])
     subprocess.run(['python3', 'combineFeatures.py','test',output_dir+'/test.csv'])
@@ -72,12 +72,16 @@ def process_dataset():
 def run_inference():
     subprocess.run(['python3', model, training_data, 'p'])
     return 
+
+'''Takes model inference and profiles output from each model and each file relative to O3'''
 def profile(test_directory, n):
+    #Gathers optimization permutations
     optimization_permutations = []
     with open(optimization_permutations_source, 'r') as file:
         for line in file:
             row = line.strip().split(',') 
             optimization_permutations.append(row)
+    #Gathers performance Output
     output=[]                   
     with open(model_output, newline='') as csvfile:
         reader = csv.reader(csvfile)
@@ -85,19 +89,26 @@ def profile(test_directory, n):
         for row in reader:
             filename = row[0]
             times=[filename]
+            # Profile each optimization sequence
+            llvm_ir,output_dir=generate_bytecode(test_directory,filename)
+
             for model_name, opt_sequence_number in zip(headers[1:], row[1:]):
-                # Get the optimization sequence
                 opt_sequence = optimization_permutations[int(opt_sequence_number)]
-                # Compile the test file with the optimization sequence
-                times.append(compile_test_file_with_optimization(test_directory,filename, opt_sequence,n))
-            times.append(compile_test_file_with_optimization_level(test_directory,filename, 3,n)) #O3
+                times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
+            times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, 3,n)) #O3
+            #Convert to percentage
             percent=[t/times[-1] for t in times[1:]]
             output.append(percent)
+    
+    #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         [writer.writerow(out) for out in output] 
 
     return 
+'''
+    COMMAND LINE INPUTS
+'''
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
