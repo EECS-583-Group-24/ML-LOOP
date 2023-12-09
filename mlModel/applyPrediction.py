@@ -48,6 +48,7 @@ def compile_test_file_with_optimization(input_file, opt_sequence):
     print(f"Execution time for {input_file} with {optimization_permutations.index(opt_sequence)+1}: {execution_time:.8f} seconds")
     return execution_time
 
+
     
 # Function to profile test file and collect timing results
 def profile_test_file(input_file, opt_sequence):
