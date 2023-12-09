@@ -61,6 +61,9 @@ def run_models():
             normalized_new_file_features = scaler.transform([new_file_features])  # Normalize the new file features
 
             predicted_opt_sequence = int(round(model.predict(normalized_new_file_features)[0]))
+            # Ensure the predicted sequence is between 0 and 120
+            predicted_opt_sequence = max(0, min(predicted_opt_sequence, 120))
+            
             filename = testing_features[i][0]
             if filename not in results:
                 results[filename] = {}
