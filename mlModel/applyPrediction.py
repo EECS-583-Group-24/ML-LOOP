@@ -128,3 +128,18 @@ for opt_level in range(1, 4):
     timing = compile_test_file_with_optimization_level(filename, opt_level)
     # Update the results list with the timings for O1, O2, and O3
     print(f"{filename}: -O{opt_level}", timing)
+    
+
+# Use the generated opt sequence numbers from predictions.csv to run opt sequences
+with open('predictions.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile)
+    headers = next(reader)  # Skip header row
+    for row in reader:
+        filename = row[0]
+        for model_name, opt_sequence_number in zip(headers[1:], row[1:]):
+            # Get the optimization sequence
+            opt_sequence = optimization_permutations[int(opt_sequence_number)]
+            # Compile the test file with the optimization sequence
+            compile_test_file_with_optimization(filename, opt_sequence)
+            
+# Generate a new CSV with timing results comparing the predicted opt sequence with O2 and O3

@@ -10,7 +10,6 @@ def script(type,directory,output_directory):
     loop_csv_file_path = os.path.join(directory_path, 'loop_features.csv')
     final_csv_file_path = os.path.join(output_directory_path, f'{type}_final_features.csv')
     final_loop_csv_file_path = os.path.join(output_directory_path, f'{type}_final_loop_features.csv')
-    total_features = 34
 
     # Run the Bash script from that location
     script_path = os.path.join(directory_path, 'run.sh')

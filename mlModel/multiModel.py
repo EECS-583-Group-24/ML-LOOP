@@ -33,6 +33,9 @@ y = [int(row[-1]) for row in features]  # Target variable (Best Opt Passes)
 scaler = StandardScaler()
 X_normalized = scaler.fit_transform(X)
 
+# Prepare the results dictionary
+results = {}
+
 # Train each model and make predictions
 for model_name, model in models:
     print(f"\nTraining {model_name}...")
@@ -54,4 +57,19 @@ for model_name, model in models:
         normalized_new_file_features = scaler.transform([new_file_features])  # Normalize the new file features
 
         predicted_opt_sequence = int(round(model.predict(normalized_new_file_features)[0]))
+        filename = testing_features[i][0]
+        if filename not in results:
+            results[filename] = {}
+        results[filename][model_name] = predicted_opt_sequence
         print(f"Predicted Best Opt Sequence for the {testing_features[i][0]} using {model_name}: {predicted_opt_sequence}")
+
+# Write the results to a CSV file
+with open('predictions.csv', 'w', newline='') as csvfile:
+    fieldnames = ['Filename'] + [model_name for model_name, _ in models]
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    for filename, predictions in results.items():
+        row = {'Filename': filename}
+        row.update(predictions)
+        writer.writerow(row)

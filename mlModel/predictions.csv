@@ -1,0 +1,2 @@
+Filename,Random Forest,SVR Linear,SVR Poly,SVR RBF,KNN,Gradient Boosting,AdaBoost
+select.c,116,118,118,119,119,117,117
