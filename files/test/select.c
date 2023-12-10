@@ -1,3 +1,4 @@
+#include <stdio.h>
 /*************************************************************************/
 /*                                                                       */
 /*   SNU-RT Benchmark Suite for Worst Case Timing Analysis               */

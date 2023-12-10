@@ -2,3 +2,7 @@ filename,numNestedLoops,numOuterNestedLoops,averageLoopDepth,averageOuterLoopDef
 nestedLoop.c,4.0,2.0,2.0,3.0,3.0
 recursion.c,0,0,0,0,0
 select.c,2.0,1.0,2.25,3.0,3.0
+test1.c,0,0,0,0,0
+test2.c,0.0,1.0,1.0,1.0,1.0
+toy.c,0.0,1.0,1.0,1.0,1.0
+s017262325.cpp,1.0,1.0,1.5,2.0,2.0
