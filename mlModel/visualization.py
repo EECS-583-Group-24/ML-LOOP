@@ -19,6 +19,7 @@ plt.ylabel('Raw Times')
 plt.title('Raw Times of Files')
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Files_RawTimes.png', bbox_inches='tight')
+plt.close()
 
 # Plot with ML models as x-axis for raw times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -28,6 +29,7 @@ plt.ylabel('Raw Times')
 plt.title('Raw Times of ML Models')
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Models_RawTimes.png', bbox_inches='tight')
+plt.close()
 
 # Calculate percent change compared to O3 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -39,6 +41,7 @@ plt.title('Performance Improvement of Files Over O3')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Files_O3.png', bbox_inches='tight')
+plt.close()
 
 # Plot with ML models as x-axis for percent change compared to O3 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -49,6 +52,7 @@ plt.title('Performance Improvement of ML Models Over O3')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Models_O3.png', bbox_inches='tight')
+plt.close()
 
 # Calculate percent change compared to O2 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -60,6 +64,7 @@ plt.title('Performance Improvement of Files Over O2')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Files_O2.png', bbox_inches='tight')
+plt.close()
 
 # Plot with ML models as x-axis for percent change compared to O2 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -70,6 +75,7 @@ plt.title('Performance Improvement of ML Models Over O2')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Models_O2.png', bbox_inches='tight')
+plt.close()
 
 # Calculate percent change compared to O1 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -81,6 +87,7 @@ plt.title('Performance Improvement of Files Over O1')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Files_O1.png', bbox_inches='tight')
+plt.close()
 
 # Plot with ML models as x-axis for percent change compared to O1 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -91,6 +98,7 @@ plt.title('Performance Improvement of ML Models Over O1')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Models_O1.png', bbox_inches='tight')
+plt.close()
 
 # Calculate percent change compared to O0 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -102,6 +110,7 @@ plt.title('Performance Improvement of Files Over O0')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Files_O0.png', bbox_inches='tight')
+plt.close()
 
 # Plot with ML models as x-axis for percent change compared to O0 times
 plt.figure(figsize=figsize)  # Use the figure size variable
@@ -112,13 +121,15 @@ plt.title('Performance Improvement of ML Models Over O0')
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/BarGraph_Models_O0.png', bbox_inches='tight')
+plt.close()
 
 # Calculate percent change compared to O0, O1, O2, O3 times
 df_o0_o3 = df.div(df[['O0', 'O1', 'O2', 'O3']].mean(axis=1), axis=0) - 1
 
 # Calculate mean and median performance improvement for each model
-mean_improvement = df_o0_o3.mean() * 100
-median_improvement = df_o0_o3.median() * 100
+# Remove the last 4 colums (O0, O1, O2, O3)
+mean_improvement = df_o0_o3.iloc[:, :-4].mean() * 100
+median_improvement = df_o0_o3.iloc[:, :-4].median() * 100
 
 # Create a new DataFrame for the mean and median improvement
 df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
@@ -132,6 +143,7 @@ plt.title('Mean and Median Performance Improvement of ML Models Over O0, O1, O2,
 plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.savefig('../figures/Total_Models_Improvement.png', bbox_inches='tight')
+plt.close()
 
 # Optimization levels to compare against
 optimization_levels = ['O1', 'O2', 'O3']
@@ -142,9 +154,11 @@ for opt_level in optimization_levels:
     # Replace negative values with zero
     # df_opt = df_opt.clip(lower=0)
     
+    # Remove the optimization level column (O0, O1, O2, O3)
     # Calculate mean and median performance improvement for each model
-    mean_improvement = df_opt.mean() * 100
-    median_improvement = df_opt.median() * 100
+    mean_improvement = df_opt.iloc[:, :-4].mean() * 100
+    median_improvement = df_opt.iloc[:, :-4].median() * 100
+
 
     # Create a new DataFrame for the mean and median improvement
     df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
@@ -158,3 +172,4 @@ for opt_level in optimization_levels:
     plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
     plt.savefig(f'../figures/Total_Models_Improvement_{opt_level}.png', bbox_inches='tight')
+    plt.close()
