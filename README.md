@@ -4,6 +4,8 @@ This repository holds the code deliverables for Group 24's (Anurag Bangera, Chir
 
 ## Instructions (simple)
 1. Run scripts/runEntireWorkflow.py
+2. Run scripts/multiModel.py
+3. Run scripts/inference.py
 
 ## Instructions (manual)
 
@@ -17,3 +19,4 @@ This repository holds the code deliverables for Group 24's (Anurag Bangera, Chir
     5. combineFeatures.py: Create the training csv and the test csv for the ML model.
     The outputted "training.csv" and "test.csv" will be found in mlModels.
 4. In mlModels, run "knn.py" for the 1st Nearest Neighbor results on each of the test files, or "randomForest.py" for the Random Forest results.
+5. Run inference.py to compare predicted ML results to O3 in results.csv file
