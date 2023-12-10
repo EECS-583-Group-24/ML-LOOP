@@ -1,5 +1,4 @@
 import csv
-import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 

@@ -1,6 +1,5 @@
 import subprocess
 import os
-import itertools
 import timeit
 import csv
 

@@ -19,7 +19,6 @@ plt.xlabel('Models')
 plt.ylabel('Performance Improvement (%)')
 plt.title('Performance Improvement of Models Over O3')
 
-
 # Show the legend outside the plot area
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 
