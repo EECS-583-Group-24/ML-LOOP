@@ -4,17 +4,19 @@ Leverage machine learning to dynamically predict and apply optimization pass seq
 ## Project Overview
 **Team Members:** Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang.
 
-This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Project.
+This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Advanced Compilers Project at the University of Michigan.
 
 ## Getting Started: Quick Instructions
 For a quick setup, follow these steps:
 
 1. **Run Entire Workflow:** 
-   Execute `scripts/runEntireWorkflow.py` to automate the process.
+   Execute `python3 scripts/runEntireWorkflow.py` to automate the process.
 2. **Activate Multiple Models:** 
-   Use `scripts/multiModel.py` to engage various machine learning models.
+   Use `python3 mlModel/multiModel.py` to engage various machine learning models.
 3. **Begin Inference:** 
-   Initiate `scripts/inference.py` for the inference phase.
+   Initiate `python3 mlModel/inference.py` for the inference phase.
+4.  **Visualize Reults:** 
+   Initiate `python3 mlModel/visualize.py` for
 
 ## Detailed Instructions: Manual Setup
 
@@ -43,4 +45,8 @@ Execute the following scripts in sequence to prepare the training and test datas
 
 ### Step 4: Performance Analysis
 - Run `inference.py` to compare the machine learning predicted results against LLVM's O3 optimizations, documented in the `results.csv` file.
+
+### Step 5: Visualize Results
+- Run `visualize.py` to create various graphs to visualize the results.
+
 
