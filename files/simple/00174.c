@@ -42,7 +42,6 @@ int main()
    // type coercion
    a = 2;
    printf("%f\n", a);
-   printf("%f\n", sin(2));
 
    return 0;
 }

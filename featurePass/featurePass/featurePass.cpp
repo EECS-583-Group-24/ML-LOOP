@@ -279,7 +279,7 @@ namespace
                         {
                             instCount[8]++;
                         }
-                        else if (opcode == "ceanupret")
+                        else if (opcode == "cleanupret")
                         {
                             instCount[9]++;
                         }
