@@ -169,7 +169,10 @@ for opt_level in optimization_levels:
     plt.xlabel('ML Models')
     plt.ylabel('Performance Improvement (%)')
     plt.title(f'Mean and Median Performance Improvement of ML Models Over {opt_level}')
-    plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
-    plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+    plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter()) # Add percent sign to y-axis
+    plt.gca().yaxis.set_minor_locator(mtick.AutoMinorLocator()) # Add minor ticks without labels
+    #plt.grid(True, which='major', axis='y', linestyle='-', color='gray')
+    #plt.gca().set_axisbelow(True)
+    plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5)) # Move legend outside of plot
     plt.savefig(f'../figures/Total_Models_Improvement_{opt_level}.png', bbox_inches='tight')
-    plt.close()
+    plt.close() # Close the figure to save memory
