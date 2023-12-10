@@ -101,9 +101,11 @@ def profile(test_directory, n):
             # Iterate from 0-3 for optimization levels
             for i in range(4):
                 times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, i,n))
-            #Convert to percentage
-            percent=[t/times[-1] for t in times[1:]]
-            output.append(percent)
+            
+            # #Convert to percentage
+            # percent=[t/times[-1] for t in times[1:]]
+            # output.append(percent)
+            output.append(times)
     
     #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
@@ -122,4 +124,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../files/test',100)
+    profile('../files/test',10)
