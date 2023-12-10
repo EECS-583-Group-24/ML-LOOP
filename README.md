@@ -10,13 +10,13 @@ This repository holds the code deliverables for Group 24's (Anurag Bangera, Chir
 For a quick setup, follow these steps:
 
 1. **Run Entire Workflow:** 
-   Execute `python3 scripts/runEntireWorkflow.py` to automate the process.
+   Run `cd scripts` then `python3 runEntireWorkflow.py` to automate the process.
 2. **Activate Multiple Models:** 
-   Use `python3 mlModel/multiModel.py` to engage various machine learning models.
+   Run `cd ../mlModel` then `python3 multiModel.py` to engage various machine learning models.
 3. **Begin Inference:** 
-   Initiate `python3 mlModel/inference.py` for the inference phase.
+   Run `python3 inference.py` for the inference phase.
 4.  **Visualize Reults:** 
-   Initiate `python3 mlModel/visualize.py` for
+   Run `python3 visualize.py` to create various performance graphs
 
 ## Detailed Instructions: Manual Setup
 
