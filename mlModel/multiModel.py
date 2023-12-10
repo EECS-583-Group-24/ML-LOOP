@@ -47,7 +47,7 @@ def run_models():
         if model_name == 'Random Number':
             # Generate a random number between 0 and 120 for each test file
             for i in range(len(testing_features)):
-                predicted_opt_sequence = random.randint(0, 120)
+                predicted_opt_sequence = random.randint(0, 119)
                 filename = testing_features[i][0]
                 if filename not in results:
                     results[filename] = {}
