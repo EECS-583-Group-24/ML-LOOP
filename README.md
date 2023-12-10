@@ -1,6 +1,6 @@
 # ML-LOOP: Optimizing LLVM with Machine Learning
 Leverage machine learning to dynamically predict and apply optimization pass sequences in LLVM. 
-
+![alt text](https://github.com/EECS-583-Group-24/ML-LOOP/blob/main/figures/Total_Models_Improvement_O3.png)
 ## Project Overview
 **Team Members:** Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang.
 
