@@ -1,5 +1,5 @@
 # ML-LOOP: Machine Learning LLVM Optimization Ordering Pass 
-Optimization Pass Ordering EECS 583 Project
+Using Machine Learning to Predict the Sequences of Optimization Passes in LLVM
 
 This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Project.
 
