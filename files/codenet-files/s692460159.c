@@ -1,1 +1,0 @@
-*s,c;char*p=s+3,*q=s+3;main(){for(gets(s);p-->s;)*p-66?!c?*--q=*p:c--:c++;puts(q);}
