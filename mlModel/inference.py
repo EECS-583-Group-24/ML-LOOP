@@ -98,7 +98,9 @@ def profile(test_directory, n):
             for model_name, opt_sequence_number in zip(headers[1:], row[1:]):
                 opt_sequence = optimization_permutations[int(opt_sequence_number)]
                 times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
-            times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, 3,n)) #O3
+            # Iterate from 0-3 for optimization levels
+            for i in range(4):
+                times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, i,n))
             #Convert to percentage
             percent=[t/times[-1] for t in times[1:]]
             output.append(percent)
@@ -106,7 +108,7 @@ def profile(test_directory, n):
     #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Filename'] + headers[1:] + ['O3'])  # Write header row
+        writer.writerow(['Filename'] + headers[1:] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
         for i, out in enumerate(output):
             out.insert(0,filenames[i])
             writer.writerow(out)
