@@ -176,3 +176,25 @@ for opt_level in optimization_levels:
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5)) # Move legend outside of plot
     plt.savefig(f'../figures/Total_Models_Improvement_{opt_level}.png', bbox_inches='tight')
     plt.close() # Close the figure to save memory
+
+# Calculate percent change compared to the O3 optimization level
+df_opt = df.div(df['O3'], axis=0) - 1
+
+# Calculate min and max performance improvement for each model
+min_improvement = df_opt.iloc[:, :-4].min() * 100
+max_improvement = df_opt.iloc[:, :-4].max() * 100
+
+# Create a new DataFrame for the min and max improvement
+df_min_max_improvement = pd.DataFrame({'Min': min_improvement, 'Max': max_improvement})
+
+# Plot with ML models as x-axis for min and max performance improvement
+plt.figure(figsize=figsize)  # Use the figure size variable
+ax = df_min_max_improvement.plot(kind='bar')
+plt.xlabel('ML Models')
+plt.ylabel('Performance Improvement (%)')
+plt.title('Min and Max Performance Improvement of ML Models Over O3')
+plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
+plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+plt.gca().yaxis.set_minor_locator(mtick.AutoMinorLocator())
+plt.savefig('../figures/Min_Max_Models_Improvement_O3.png', bbox_inches='tight')
+plt.close()
