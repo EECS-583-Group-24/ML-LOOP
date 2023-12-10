@@ -1,23 +1,46 @@
-# ML-LOOP: Machine Learning LLVM Optimization Ordering Pass 
-Using Machine Learning to Predict the Sequences of Optimization Passes in LLVM
+# ML-LOOP: Optimizing LLVM with Machine Learning
+Leverage machine learning to dynamically predict and apply optimization pass sequences in LLVM. 
+
+## Project Overview
+**Team Members:** Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang.
 
 This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Project.
 
-## Instructions (simple)
-1. Run scripts/runEntireWorkflow.py
-2. Run scripts/multiModel.py
-3. Run scripts/inference.py
+## Getting Started: Quick Instructions
+For a quick setup, follow these steps:
 
-## Instructions (manual)
+1. **Run Entire Workflow:** 
+   Execute `scripts/runEntireWorkflow.py` to automate the process.
+2. **Activate Multiple Models:** 
+   Use `scripts/multiModel.py` to engage various machine learning models.
+3. **Begin Inference:** 
+   Initiate `scripts/inference.py` for the inference phase.
 
-1. Make sure you build the featurePass with CMake in a "build" directory with "cmake ..". In this build directory, run "make" in featurePass/build/featurePass and featurePass/build/loopPass
-    "featurePass" contains a function pass that collects several features.
-    "loopPass" contains a loop pass that collects several features.
-2. Run the scripts in the scripts folder to generate the training and test sets, in order generatePermutations.py -> runOptimizations.py -> collectFeatures.py -> combineFeatures.py :
-    1. generatePermutations.py: Creates a .txt file that holds the different permutations of the passes
-    2. runOptimizations.py: Generates the best optimization pass for each file.
-    3. collectFeatures.py: Collect the features on each training and test file.
-    5. combineFeatures.py: Create the training csv and the test csv for the ML model.
-    The outputted "training.csv" and "test.csv" will be found in mlModels.
-4. In mlModels, run "knn.py" for the 1st Nearest Neighbor results on each of the test files, or "randomForest.py" for the Random Forest results.
-5. Run inference.py to compare predicted ML results to O3 in results.csv file
+## Detailed Instructions: Manual Setup
+
+### Step 1: Build the Feature Passes
+- **Initial Setup:** 
+  Use CMake to build the `featurePass` in a "build" directory: `cmake ..`. Then, execute `make` in `featurePass/build/featurePass` and `featurePass/build/loopPass`.
+  - `featurePass`: A function pass that aggregates various features.
+  - `loopPass`: A loop pass for feature collection.
+
+### Step 2: Script Execution for Data Preparation
+Execute the following scripts in sequence to prepare the training and test datasets:
+
+1. **generatePermutations.py:** 
+   Generates a .txt file with different pass permutations.
+2. **runOptimizations.py:** 
+   Identifies the optimal optimization pass for each file.
+3. **collectFeatures.py:** 
+   Gathers features from each training and test file.
+4. **combineFeatures.py:** 
+   Produces `training.csv` and `test.csv` for machine learning models, located in `mlModels`.
+
+### Step 3: Model Training and Evaluation
+- In `mlModels`, run:
+  - `knn.py` for 1st Nearest Neighbor results.
+  - `randomForest.py` for Random Forest results.
+
+### Step 4: Performance Analysis
+- Run `inference.py` to compare the machine learning predicted results against LLVM's O3 optimizations, documented in the `results.csv` file.
+
