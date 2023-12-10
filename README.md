@@ -1,4 +1,5 @@
-# Optimization Pass Ordering EECS 583 Project
+# ML-LOOP: Machine Learning LLVM Optimization Ordering Pass 
+Optimization Pass Ordering EECS 583 Project
 
 This repository holds the code deliverables for Group 24's (Anurag Bangera, Chirag Bangera, Jonhan Chen, Richard Wang) EECS 583 Project.
 
