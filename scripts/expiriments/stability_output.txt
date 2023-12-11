@@ -1,0 +1,240 @@
+Run 0 has 2 good counts with a median runtime of -0.03267510080862884
+Run 1 has 5 good counts with a median runtime of 0.0014554763545870414
+Run 2 has 5 good counts with a median runtime of -0.006607093549132272
+Run 3 has 2 good counts with a median runtime of -0.03910042567388556
+Run 4 has 2 good counts with a median runtime of -0.02674180732108575
+Run 5 has 2 good counts with a median runtime of -0.024688786754502486
+Run 6 has 4 good counts with a median runtime of -0.014556352668948965
+Run 7 has 1 good counts with a median runtime of -0.04497437186104895
+Run 8 has 5 good counts with a median runtime of 0.00023800433893224338
+Run 9 has 4 good counts with a median runtime of -0.015431344215975654
+Run 10 has 4 good counts with a median runtime of -0.011383856662962356
+Run 11 has 4 good counts with a median runtime of -0.01708457692246864
+Run 12 has 2 good counts with a median runtime of -0.06723484939238757
+Run 13 has 6 good counts with a median runtime of 0.013759562882633355
+Run 14 has 2 good counts with a median runtime of -0.03700809656085405
+Run 15 has 4 good counts with a median runtime of -0.014775232808855884
+Run 16 has 4 good counts with a median runtime of -0.027177278331836238
+Run 17 has 1 good counts with a median runtime of -0.08567911039457074
+Run 18 has 4 good counts with a median runtime of -0.02307591058455403
+Run 19 has 3 good counts with a median runtime of -0.03256777081738409
+Run 20 has 4 good counts with a median runtime of -0.013328100064777516
+Run 21 has 2 good counts with a median runtime of -0.05212623397029645
+Run 22 has 4 good counts with a median runtime of -0.024061045914663258
+Run 23 has 3 good counts with a median runtime of -0.05156604828658412
+Run 24 has 2 good counts with a median runtime of -0.041601028348514035
+Run 25 has 4 good counts with a median runtime of -0.02099734466325278
+Run 26 has 3 good counts with a median runtime of -0.03309009226255592
+Run 27 has 4 good counts with a median runtime of -0.06301817047882947
+Run 28 has 3 good counts with a median runtime of -0.036770760516422106
+Run 29 has 1 good counts with a median runtime of -0.053549220343776405
+Run 30 has 3 good counts with a median runtime of -0.038907371526092846
+Run 31 has 4 good counts with a median runtime of -0.05268576218443046
+Run 32 has 1 good counts with a median runtime of -0.04407419030537123
+Run 33 has 7 good counts with a median runtime of 0.012955960898620868
+Run 34 has 1 good counts with a median runtime of -0.03689128804217896
+Run 35 has 5 good counts with a median runtime of -0.0012052285116314163
+Run 36 has 4 good counts with a median runtime of -0.02303236040858758
+Run 37 has 4 good counts with a median runtime of -0.020661482443259608
+Run 38 has 4 good counts with a median runtime of -0.03865698694648171
+Run 39 has 1 good counts with a median runtime of -0.03160332242886231
+Run 40 has 6 good counts with a median runtime of 0.01911382873378867
+Run 41 has 1 good counts with a median runtime of -0.03877167729656983
+Run 42 has 2 good counts with a median runtime of -0.020852328599401206
+Run 43 has 2 good counts with a median runtime of -0.015015934816545383
+Run 44 has 2 good counts with a median runtime of -0.03945852416761218
+Run 45 has 2 good counts with a median runtime of -0.07150630410261516
+Run 46 has 3 good counts with a median runtime of -0.009744961036285124
+Run 47 has 5 good counts with a median runtime of 0.005226530778454014
+Run 48 has 2 good counts with a median runtime of -0.033885089107405265
+Run 49 has 6 good counts with a median runtime of 0.005419186693953618
+Run 50 has 3 good counts with a median runtime of -0.05640879749712814
+Run 51 has 4 good counts with a median runtime of -0.013178292217371235
+Run 52 has 4 good counts with a median runtime of -0.019857301212411624
+Run 53 has 2 good counts with a median runtime of -0.03986639596343573
+Run 54 has 3 good counts with a median runtime of -0.039943458120660164
+Run 55 has 1 good counts with a median runtime of -0.01922587611993777
+Run 56 has 4 good counts with a median runtime of -0.027813284460957405
+Run 57 has 5 good counts with a median runtime of 0.005463948447657588
+Run 58 has 2 good counts with a median runtime of -0.0519025905531209
+Run 59 has 5 good counts with a median runtime of 0.003862178969705407
+Run 60 has 3 good counts with a median runtime of -0.038017058402176514
+Run 61 has 2 good counts with a median runtime of -0.046544116147022765
+Run 62 has 4 good counts with a median runtime of -0.03770454263257599
+Run 63 has 4 good counts with a median runtime of -0.007344816954105519
+Run 64 has 2 good counts with a median runtime of -0.058027404958115585
+Run 65 has 3 good counts with a median runtime of -0.01673141148150456
+Run 66 has 3 good counts with a median runtime of -0.02930810738560098
+Run 67 has 2 good counts with a median runtime of -0.04178033929513368
+Run 68 has 4 good counts with a median runtime of -0.01250071447971968
+Run 69 has 3 good counts with a median runtime of -0.036442859436718204
+Run 70 has 2 good counts with a median runtime of -0.047523039410868814
+Run 71 has 2 good counts with a median runtime of -0.04756311865709175
+Run 72 has 4 good counts with a median runtime of -0.011263145066113471
+Run 73 has 3 good counts with a median runtime of -0.021286309560710856
+Run 74 has 5 good counts with a median runtime of -0.016116696091083023
+Run 75 has 3 good counts with a median runtime of -0.03338360682824513
+Run 76 has 5 good counts with a median runtime of -0.0033685522232211875
+Run 77 has 2 good counts with a median runtime of -0.0219201620921061
+Run 78 has 4 good counts with a median runtime of -0.0047831789164471715
+Run 79 has 3 good counts with a median runtime of -0.05092342840692427
+Run 80 has 5 good counts with a median runtime of -0.011928961848512044
+Run 81 has 2 good counts with a median runtime of -0.012460939869119492
+Run 82 has 1 good counts with a median runtime of -0.018067276466500706
+Run 83 has 3 good counts with a median runtime of -0.010379215584072194
+Run 84 has 5 good counts with a median runtime of -0.0026212852620024593
+Run 85 has 2 good counts with a median runtime of -0.025129010798777843
+Run 86 has 4 good counts with a median runtime of -0.03515833446375055
+Run 87 has 4 good counts with a median runtime of -0.011021819132525626
+Run 88 has 3 good counts with a median runtime of -0.05972395048615978
+Run 89 has 4 good counts with a median runtime of -0.030254673466711145
+Run 90 has 3 good counts with a median runtime of -0.041871330984966704
+Run 91 has 4 good counts with a median runtime of -0.015007346421855479
+Run 92 has 3 good counts with a median runtime of -0.05357331589522456
+Run 93 has 3 good counts with a median runtime of -0.020302939158487108
+Run 94 has 1 good counts with a median runtime of -0.06716872235425327
+Run 95 has 4 good counts with a median runtime of -0.009878607328682683
+Run 96 has 4 good counts with a median runtime of -0.01033775576590235
+Run 97 has 4 good counts with a median runtime of -0.00954425975543246
+Run 98 has 5 good counts with a median runtime of 0.002077896579229139
+Run 99 has 3 good counts with a median runtime of -0.022706899255810993
+Run 100 has 2 good counts with a median runtime of -0.028388743000264546
+Run 101 has 6 good counts with a median runtime of 0.018457537089951084
+Run 102 has 3 good counts with a median runtime of -0.007480822662185694
+Run 103 has 6 good counts with a median runtime of 0.008610115100021234
+Run 104 has 5 good counts with a median runtime of 0.0021709129763871106
+Run 105 has 2 good counts with a median runtime of -0.03068851837827892
+Run 106 has 4 good counts with a median runtime of -0.034488050299368994
+Run 107 has 1 good counts with a median runtime of -0.020931933626591792
+Run 108 has 4 good counts with a median runtime of -0.020462224479696776
+Run 109 has 0 good counts with a median runtime of -0.04631626816487304
+Run 110 has 3 good counts with a median runtime of -0.037840296503962714
+Run 111 has 6 good counts with a median runtime of 0.012126171099866643
+Run 112 has 5 good counts with a median runtime of 0.0007187676972942531
+Run 113 has 4 good counts with a median runtime of -0.014113567767006011
+Run 114 has 4 good counts with a median runtime of -0.027438568014577037
+Run 115 has 3 good counts with a median runtime of -0.016301902514760578
+Run 116 has 2 good counts with a median runtime of -0.06827692750803638
+Run 117 has 1 good counts with a median runtime of -0.06551225627560017
+Run 118 has 5 good counts with a median runtime of -0.0039913852467780165
+Run 119 has 4 good counts with a median runtime of -0.015665699375377304
+[-0.08567911039457074, 17]
+[-0.07150630410261516, 45]
+[-0.06827692750803638, 116]
+[-0.06723484939238757, 12]
+[-0.06716872235425327, 94]
+[-0.06551225627560017, 117]
+[-0.06301817047882947, 27]
+[-0.05972395048615978, 88]
+[-0.058027404958115585, 64]
+[-0.05640879749712814, 50]
+[-0.05357331589522456, 92]
+[-0.053549220343776405, 29]
+[-0.05268576218443046, 31]
+[-0.05212623397029645, 21]
+[-0.0519025905531209, 58]
+[-0.05156604828658412, 23]
+[-0.05092342840692427, 79]
+[-0.04756311865709175, 71]
+[-0.047523039410868814, 70]
+[-0.046544116147022765, 61]
+[-0.04631626816487304, 109]
+[-0.04497437186104895, 7]
+[-0.04407419030537123, 32]
+[-0.041871330984966704, 90]
+[-0.04178033929513368, 67]
+[-0.041601028348514035, 24]
+[-0.039943458120660164, 54]
+[-0.03986639596343573, 53]
+[-0.03945852416761218, 44]
+[-0.03910042567388556, 3]
+[-0.038907371526092846, 30]
+[-0.03877167729656983, 41]
+[-0.03865698694648171, 38]
+[-0.038017058402176514, 60]
+[-0.037840296503962714, 110]
+[-0.03770454263257599, 62]
+[-0.03700809656085405, 14]
+[-0.03689128804217896, 34]
+[-0.036770760516422106, 28]
+[-0.036442859436718204, 69]
+[-0.03515833446375055, 86]
+[-0.034488050299368994, 106]
+[-0.033885089107405265, 48]
+[-0.03338360682824513, 75]
+[-0.03309009226255592, 26]
+[-0.03267510080862884, 0]
+[-0.03256777081738409, 19]
+[-0.03160332242886231, 39]
+[-0.03068851837827892, 105]
+[-0.030254673466711145, 89]
+[-0.02930810738560098, 66]
+[-0.028388743000264546, 100]
+[-0.027813284460957405, 56]
+[-0.027438568014577037, 114]
+[-0.027177278331836238, 16]
+[-0.02674180732108575, 4]
+[-0.025129010798777843, 85]
+[-0.024688786754502486, 5]
+[-0.024061045914663258, 22]
+[-0.02307591058455403, 18]
+[-0.02303236040858758, 36]
+[-0.022706899255810993, 99]
+[-0.0219201620921061, 77]
+[-0.021286309560710856, 73]
+[-0.02099734466325278, 25]
+[-0.020931933626591792, 107]
+[-0.020852328599401206, 42]
+[-0.020661482443259608, 37]
+[-0.020462224479696776, 108]
+[-0.020302939158487108, 93]
+[-0.019857301212411624, 52]
+[-0.01922587611993777, 55]
+[-0.018067276466500706, 82]
+[-0.01708457692246864, 11]
+[-0.01673141148150456, 65]
+[-0.016301902514760578, 115]
+[-0.016116696091083023, 74]
+[-0.015665699375377304, 119]
+[-0.015431344215975654, 9]
+[-0.015015934816545383, 43]
+[-0.015007346421855479, 91]
+[-0.014775232808855884, 15]
+[-0.014556352668948965, 6]
+[-0.014113567767006011, 113]
+[-0.013328100064777516, 20]
+[-0.013178292217371235, 51]
+[-0.01250071447971968, 68]
+[-0.012460939869119492, 81]
+[-0.011928961848512044, 80]
+[-0.011383856662962356, 10]
+[-0.011263145066113471, 72]
+[-0.011021819132525626, 87]
+[-0.010379215584072194, 83]
+[-0.01033775576590235, 96]
+[-0.009878607328682683, 95]
+[-0.009744961036285124, 46]
+[-0.00954425975543246, 97]
+[-0.007480822662185694, 102]
+[-0.007344816954105519, 63]
+[-0.006607093549132272, 2]
+[-0.0047831789164471715, 78]
+[-0.0039913852467780165, 118]
+[-0.0033685522232211875, 76]
+[-0.0026212852620024593, 84]
+[-0.0012052285116314163, 35]
+[0.00023800433893224338, 8]
+[0.0007187676972942531, 112]
+[0.0014554763545870414, 1]
+[0.002077896579229139, 98]
+[0.0021709129763871106, 104]
+[0.003862178969705407, 59]
+[0.005226530778454014, 47]
+[0.005419186693953618, 49]
+[0.005463948447657588, 57]
+[0.008610115100021234, 103]
+[0.012126171099866643, 111]
+[0.012955960898620868, 33]
+[0.013759562882633355, 13]
+[0.018457537089951084, 101]
+[0.01911382873378867, 40]

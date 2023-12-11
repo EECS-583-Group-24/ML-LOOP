@@ -10,8 +10,8 @@ import statistics
 collect_features_script='../scripts/collectFeatures.py'
 output_dir='.'
 model='./multiModel.py'
-training_data='./training.csv'
-optimization_permutations_source='../scripts/optimization_permutations.txt'
+training_data="../temp/best_optimization_results.csv"
+optimization_permutations_source='../optimization_permutations.txt'
 model_output='./predictions.csv'
 '''
     FUNCTION TO GENERATE COMPILED CODE
@@ -64,15 +64,6 @@ def compile_test_file_with_optimization_level(output_dir,bytecode, optimization_
 '''
     FUNCTIONS FOR FUNCTIONALITY
 '''
-def generate_features_directory(test_files):
-    subprocess.run(['python3', collect_features_script, 'test', test_files])
-    subprocess.run(['python3', 'combineFeatures.py','test',output_dir+'/test.csv'])
-    return
-def process_dataset():
-    return
-def run_inference():
-    subprocess.run(['python3', model, training_data, 'p'])
-    return 
 
 '''Takes model inference and profiles output from each model and each file relative to O3'''
 def profile(test_directory, n):
@@ -85,7 +76,7 @@ def profile(test_directory, n):
     #Gathers performance Output
     output=[]
     filenames=[]                   
-    with open(model_output, newline='') as csvfile:
+    with open(training_data, newline='') as csvfile:
         reader = csv.reader(csvfile)
         headers = next(reader)  # Skip header row
         for row in reader:
@@ -94,23 +85,19 @@ def profile(test_directory, n):
             times=[filename]
             # Profile each optimization sequence
             llvm_ir,output_dir=generate_bytecode(test_directory,filename)
-
-            for model_name, opt_sequence_number in zip(headers[1:], row[1:]):
-                opt_sequence = optimization_permutations[int(opt_sequence_number)]
-                times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
+            opt_sequence = optimization_permutations[int(row[2])]
+            times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
             # Iterate from 0-3 for optimization levels
             for i in range(4):
                 times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, i,n))
-            
-            # #Convert to percentage
-            # percent=[t/times[-1] for t in times[1:]]
-            # output.append(percent)
-            output.append(times)
-    
+            #Convert to percentage
+            percent=[(times[-1]-t)/times[-1] for t in times[1:]]
+            output.append(percent)
+    print(statistics.median([times[:][2]]))
     #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Filename'] + headers[1:] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
+        writer.writerow(['Filename'] + [headers[2]] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
         for i, out in enumerate(output):
             out.insert(0,filenames[i])
             writer.writerow(out)
@@ -124,8 +111,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-<<<<<<< Updated upstream
-    profile('../files/test',10)
-=======
-    profile('../files/test',250)
->>>>>>> Stashed changes
+    profile('../../files/simple',1)
