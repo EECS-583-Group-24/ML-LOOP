@@ -8,8 +8,12 @@ test_files='../files/test/'
 temp_dir='./temp/'
 output_dir='../mlModel'
 training_output='../temp/best_optimization_results.csv'
+ml_model='../mlModel/'
 
-# Workflow: Create FeaturePass.so -> generatePermutations.py -> runOptimizations.py -> collectFeatures.py -> combineFeatures.py
+# Workflow: Create FeaturePass.so -> generatePermutations.py -> runOptimizations.py -> collectFeatures.py -> combineFeatures.py -> inference.py -> visualization.py
+
+# Import all python requirements
+subprocess.run(['pip3', 'install', '-r', '../requirements.txt'])
 
 # Create FeaturePass.so executable
 subprocess.run(['cmake', '..'], cwd=directory_path)
@@ -27,3 +31,8 @@ subprocess.run(' '.join(['python3', 'combineFeatures.py',f'--training_opt {train
 subprocess.run(['python3', 'collectFeatures.py', 'test', test_files])
 subprocess.run(['python3', 'combineFeatures.py','test',output_dir+'/test.csv'])
 
+# Run inference.py
+subprocess.run(['python3', 'inference.py'], cwd=ml_model)
+
+# Visualize results
+subprocess.run(['python3', 'visualization.py'], cwd=ml_model)

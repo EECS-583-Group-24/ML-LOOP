@@ -10,13 +10,7 @@ This repository holds the code deliverables for Group 24's (Anurag Bangera, Chir
 For a quick setup, follow these steps:
 
 1. **Run Entire Workflow:** 
-   Run `cd scripts` then `python3 runEntireWorkflow.py` to automate the process.
-2. **Activate Multiple Models:** 
-   Run `cd ../mlModel` then `python3 multiModel.py` to engage various machine learning models.
-3. **Begin Inference:** 
-   Run `python3 inference.py` for the inference phase.
-4.  **Visualize Reults:** 
-   Run `python3 visualize.py` to create various performance graphs
+   Run `cd scripts` then `python3 runEntireWorkflow.py` to automate the entire process.
 
 ## Detailed Instructions: Manual Setup
 
@@ -27,7 +21,7 @@ For a quick setup, follow these steps:
   - `loopPass`: A loop pass for feature collection.
 
 ### Step 2: Script Execution for Data Preparation
-Execute the following scripts in sequence to prepare the training and test datasets:
+First make sure to run `pip3 install -r requirements.txt`. Execute the following scripts in sequence to prepare the training and test datasets:
 
 1. **generatePermutations.py:** 
    Generates a .txt file with different pass permutations.
@@ -40,8 +34,9 @@ Execute the following scripts in sequence to prepare the training and test datas
 
 ### Step 3: Model Training and Evaluation
 - In `mlModels`, run:
-  - `knn.py` for 1st Nearest Neighbor results.
-  - `randomForest.py` for Random Forest results.
+  - `multiModel.py` for all ML model results.
+  - `knn.py` for just the 1st Nearest Neighbor results.
+  - `randomForest.py` for just the Random Forest results.
 
 ### Step 4: Performance Analysis
 - Run `inference.py` to compare the machine learning predicted results against LLVM's O3 optimizations, documented in the `results.csv` file.
