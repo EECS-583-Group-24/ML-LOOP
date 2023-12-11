@@ -19,13 +19,14 @@ model_output='./predictions.csv'
 '''Times executation of n runs and returns average'''
 def run_time_executable(executable,n):
     times = []
-    for _ in range(n):
-        start_time = timeit.default_timer()
-        subprocess.run([executable])  # Execute the generated executable
-        execution_time = timeit.default_timer() - start_time
-        times.append(execution_time)
-        median_time = statistics.median(times)
-    return median_time
+    return timeit.timeit(stmt = f"subprocess.call([\'{executable}\'],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)", setup = "import subprocess", number=n)
+    #for _ in range(n):
+    #    start_time = timeit.default_timer()
+    #    subprocess.run([executable])  # Execute the generated executable
+    #    execution_time = timeit.default_timer() - start_time
+    #    times.append(execution_time)
+    #    median_time = statistics.median(times)
+    #return median_time
 '''Generates llvm_ir and output directory from c file'''
 def generate_bytecode(test_directory, filename):
     # Create a directory based on the input file name
@@ -33,7 +34,7 @@ def generate_bytecode(test_directory, filename):
     os.makedirs(output_dir, exist_ok=True)
     
     llvm_ir = os.path.join(output_dir, f"{os.path.splitext(filename)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, filename)} -o {llvm_ir}", shell=True)
+    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, filename)} -o {llvm_ir}", shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     return llvm_ir,output_dir
 
 '''Compiles and tests files with a optimization sequence'''
@@ -83,13 +84,14 @@ def profile(test_directory, n):
             filename = row[0]
             filenames.append(filename)
             times=[filename]
+            print(f'Testing {filename} ...')
             # Profile each optimization sequence
             llvm_ir,output_dir=generate_bytecode(test_directory,filename)
             opt_sequence = optimization_permutations[int(row[2])]
             times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
             # Iterate from 0-3 for optimization levels
-            for i in range(4):
-                times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, i,n))
+            #for i in range(4):
+            times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, 3,n))
             #Convert to percentage
             percent=[(times[-1]-t)/times[-1] for t in times[1:]]
             output.append(percent)
@@ -111,4 +113,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../../files/simple',1)
+    profile('../../files/simple',10)
