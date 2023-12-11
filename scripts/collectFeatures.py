@@ -142,10 +142,10 @@ def script(type,directory,output_directory):
         for file, data in file_data.items():
             output_file.write(f"{file},{','.join(map(str, data))}\n")
 
-    script_path = os.path.join(directory_path, 'count.sh')
-    os.chdir(directory_path)
-    subprocess.run(script_path, shell=True)
-    os.chdir(os.path.dirname(__file__))
+    # script_path = os.path.join(directory_path, 'count.sh')
+    # os.chdir(directory_path)
+    # subprocess.run(script_path, shell=True)
+    # os.chdir(os.path.dirname(__file__))
     
     # # Open the features.csv file for reading
     # with open(paper_csv_file_path, 'r') as file:
