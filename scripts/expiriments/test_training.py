@@ -113,4 +113,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../../files/simple',10)
+    profile('../../files/simple',100)

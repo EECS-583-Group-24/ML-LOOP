@@ -9,15 +9,15 @@ from multiprocessing import Pool
 from itertools import repeat
 import math
 import random
-def timed_run(executable_file, terminal:bool=False):
+def timed_run(executable_file, terminal, n):
     if not terminal:
         start_time = timeit.default_timer()
         subprocess.run([executable_file])
         return timeit.default_timer() - start_time                      
     else:
-        return timeit.timeit(stmt = f"subprocess.call([\'{executable_file}\'],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)", setup = "import subprocess", number=1)
+        return timeit.timeit(stmt = f"subprocess.call([\'{executable_file}\'],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)", setup = "import subprocess", number=n)
 # Function to compile test file with optimization sequence
-def compile_test_file_with_optimization(input_file, opt_sequence,test_directory,id, non_optimized_file, output_dir):
+def compile_test_file_with_optimization(input_file, opt_sequence,test_directory,id, non_optimized_file, output_dir,n):
     #print(f"Testing opt sequence #{pass_id} for {input_file} ...")
     # Join the list elements into a single string
     opt_flags = ' '.join(opt_sequence)
@@ -34,12 +34,12 @@ def compile_test_file_with_optimization(input_file, opt_sequence,test_directory,
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
     
     # Measure execution time of the executable
-    execution_time=timed_run(executable_file,True)
+    execution_time=timed_run(executable_file,True,n)
 
     #print(f"Execution time for {input_file} with {pass_id}: {execution_time:.8f} seconds")
     return [execution_time,opt_sequence]
 
-def createDataset(directory):
+def createDataset(directory,d,start):
     # Directory containing test files 
     test_directory = os.path.abspath(os.path.join(os.path.dirname(__file__), directory))
     # Fetch all C/C++ files in the test directory
@@ -59,7 +59,7 @@ def createDataset(directory):
 
     # Get Best Optimization Patterns for each test case
     for input_file in test_files:
-        opts=optimization_permutations#random.sample(optimization_permutations,k=math.floor(len(optimization_permutations)/2))
+        opts=random.sample(optimization_permutations,k=start)
         # Create a directory based on the input file name
         print(f'Testing {input_file} ...')
         output_dir = os.path.join("output", os.path.splitext(input_file)[0])
@@ -70,11 +70,11 @@ def createDataset(directory):
             times=[]
             with Pool() as pool:
             # call the same function with different data in parallel
-                for result in pool.starmap(compile_test_file_with_optimization, zip(repeat(input_file),opts,repeat(test_directory),range(len(opts)),repeat(non_optimized_file),repeat(output_dir))):
+                for result in pool.starmap(compile_test_file_with_optimization, zip(repeat(input_file),opts,repeat(test_directory),range(len(opts)),repeat(non_optimized_file),repeat(output_dir),repeat(math.ceil(start/len(opts))))):
                     times.append(result)
             
             #times.sort()
-            best_times=heapq.nsmallest(math.floor(len(times)/2),times)
+            best_times=heapq.nsmallest(max(math.floor(len(times)/d),1),times)
             opts=[x[1] for x in best_times]
         if(store_size==1):
             results.append([input_file, 'NaN',optimization_permutations.index(opts[0])])
@@ -93,6 +93,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
     parser.add_argument('training_dir',help="realtive path to test directory")
+    parser.add_argument('-d',required=False,type=int,default=2,help="Shrink factor (larger=quicker), must be greater than 1")
+    parser.add_argument('--start',required=False,type=int,default=120,help="Start Size")
     args = parser.parse_args()
-    createDataset(args.training_dir)
+    createDataset(args.training_dir,args.d,args.start)
 
