@@ -142,43 +142,6 @@ def script(type,directory,output_directory):
         for file, data in file_data.items():
             output_file.write(f"{file},{','.join(map(str, data))}\n")
 
-    # script_path = os.path.join(directory_path, 'count.sh')
-    # os.chdir(directory_path)
-    # subprocess.run(script_path, shell=True)
-    # os.chdir(os.path.dirname(__file__))
-    
-    # # Open the features.csv file for reading
-    # with open(paper_csv_file_path, 'r') as file:
-    #     lines = file.readlines()
-
-    # # Create a dictionary to store data for each file
-    # file_data = {}
-    # current_file = ''
-
-    # # Process each line in the file
-    # for line in lines:
-    #     if line.startswith('Output for'):
-    #         # Extract the filename
-    #         current_file = line.split('Output for ')[1].strip().rstrip(':')
-    #         file_data[current_file] = [0] * 65
-    #     else:
-    #         # Split the line into individual floats
-    #         integers = [float(num) for num in line.strip().split(',') if num != '']
-    #         if integers:
-    #             # If data exists, add it to the corresponding file entry in the dictionary
-    #             if len(file_data[current_file]) == 0:
-    #                 file_data[current_file] = integers
-    #             else:
-    #                 # Add corresponding integers together
-    #                 for i in range(len(integers)):
-    #                     file_data[current_file][i] = integers[i]
-
-    # # Write aggregated data to the final_features.csv file
-    # with open(final_paper_csv_file_path, 'w') as output_file:
-    #     output_file.write("filename,ret,br,switch,indirectbr,invoke,callbr,resume,catchswitch,catchret,cleanupret,unreachable,fneg,add,fadd,sub,fsub,mul,fmul,udiv,sdiv,fdiv,urem,srem,frem,shl,lshr,ashr,and,or,xor,extractelement,insertelement,shufflevector,extractvalue,insertvalue,alloca,load,store,fence,cmpxchg,atomicrmw,getelementptr,trunc,zext,sext,fptrunc,fpext,fptoui,fptosi,uitofp,sitofp,ptrtoint,inttoptr,bitcast,addrspacecast,icmp,fcmp,phi,select,freeze,call,va_arg,landingpad,catchpad,cleanuppad\n")
-    #     for file, data in file_data.items():
-    #         output_file.write(f"{file},{','.join(map(str, data))}\n")
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

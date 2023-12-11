@@ -10,9 +10,6 @@ def script(directory,type,optimal,output):
     with open(os.path.join(directory, f'{type}_final_loop_features.csv'), 'r') as f:
         reader = csv.reader(f)
         df2 = list(reader)
-    # with open(os.path.join(directory, f'{type}_final_paper_features.csv'), 'r') as f:
-    #     reader = csv.reader(f)
-    #     df4 = list(reader)
     if optimal!=None:
         with open(os.path.join(directory,optimal), 'r') as f:
             reader = csv.reader(f)
@@ -24,14 +21,6 @@ def script(directory,type,optimal,output):
                 for row3 in df3[1:]:
                     if row1[0] == row2[0] and row2[0] == row3[0] and row1[0] == row3[0]:  # If the 'filename' values match
                         mergeddf.append(row1 + row2[1:] + row3[1:])  # Merge the rows
-        # paperdf = [df4[0] + df3[0][1:]]
-        # for row1 in df4[1:]:
-        #     for row2 in df3[1:]:
-        #         if row1[0] == row2[0]:
-        #             paperdf.append(row1 + row2[1:])
-        # with open('../mlModel/paper_training.csv', 'w', newline='') as f:
-        #     writer = csv.writer(f)
-        #     writer.writerows(paperdf)
     else:
         # Merge the data based on the 'filename' column
         mergeddf = [df1[0] + df2[0][1:]]  # Start with the headers
@@ -39,10 +28,6 @@ def script(directory,type,optimal,output):
             for row2 in df2[1:]:
                     if row1[0] == row2[0]:  # If the 'filename' values match
                         mergeddf.append(row1 + row2[1:])  # Merge the rows
-        # paperdf = df4
-        # with open('../mlModel/paper_test.csv', 'w', newline='') as f:
-        #     writer = csv.writer(f)
-        #     writer.writerows(paperdf)
 
     # Write the merged data to a new CSV file
     with open(output, 'w', newline='') as f:
