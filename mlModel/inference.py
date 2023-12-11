@@ -10,9 +10,9 @@ import statistics
 collect_features_script='../scripts/collectFeatures.py'
 output_dir='.'
 model='./multiModel.py'
-training_data='./training.csv'
+training_data='./paper_training.csv'
 optimization_permutations_source='../scripts/optimization_permutations.txt'
-model_output='./predictions.csv'
+model_output='./paper_predictions.csv'
 '''
     FUNCTION TO GENERATE COMPILED CODE
 '''
@@ -108,7 +108,7 @@ def profile(test_directory, n):
             output.append(times)
     
     #Print Results
-    with open('results.csv', 'w', newline='') as csvfile:
+    with open('paper_results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Filename'] + headers[1:] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
         for i, out in enumerate(output):
