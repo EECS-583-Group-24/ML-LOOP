@@ -11,6 +11,10 @@ For a quick setup, follow these steps:
 
 1. **Run Entire Workflow:** 
    Run `cd scripts` then `python3 runEntireWorkflow.py` to automate the entire process.
+   - ETA to Run (using `time python3 runEntireWorkflow.py`):
+      - real    9m 12.976s
+      - user    24m 33.383s
+      - sys     21m 30.435s
 
 ## Detailed Instructions: Manual Setup
 
