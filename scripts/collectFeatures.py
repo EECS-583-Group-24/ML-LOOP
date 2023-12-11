@@ -8,10 +8,8 @@ def script(type,directory,output_directory):
     output_directory_path = os.path.join(os.path.dirname(__file__), output_directory)
     csv_file_path = os.path.join(directory_path, 'features.csv')
     loop_csv_file_path = os.path.join(directory_path, 'loop_features.csv')
-    # paper_csv_file_path = os.path.join(directory_path, 'paper_features.csv')
     final_csv_file_path = os.path.join(output_directory_path, f'{type}_final_features.csv')
     final_loop_csv_file_path = os.path.join(output_directory_path, f'{type}_final_loop_features.csv')
-    # final_paper_csv_file_path = os.path.join(output_directory_path, f'{type}_final_paper_features.csv')
 
     # Run the Bash script from that location
     script_path = os.path.join(directory_path, 'run.sh')
