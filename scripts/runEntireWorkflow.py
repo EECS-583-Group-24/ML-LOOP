@@ -15,12 +15,16 @@ ml_model='../mlModel/'
 # Import all python requirements
 subprocess.run(['pip3', 'install', '-r', '../requirements.txt'])
 
+# Make build directory if it doesnt exist
+if not os.path.exists(directory_path):
+    os.makedirs(directory_path)
+
 # Create FeaturePass.so executable
 subprocess.run(['cmake', '..'], cwd=directory_path)
 subprocess.run(['make'], cwd=directory_path)
 
 # Run generatePermutations.py
-subprocess.run(['python3', 'generatePermutations.py'])
+#subprocess.run(['python3', 'generatePermutations.py'])
 
 #Training
 subprocess.run(['python3', 'runOptimizations.py', training_files])
