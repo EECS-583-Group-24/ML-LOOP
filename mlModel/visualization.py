@@ -159,7 +159,6 @@ for opt_level in optimization_levels:
     mean_improvement = df_opt.iloc[:, :-4].mean() * 100
     median_improvement = df_opt.iloc[:, :-4].median() * 100
 
-
     # Create a new DataFrame for the mean and median improvement
     df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
 
@@ -179,15 +178,9 @@ for opt_level in optimization_levels:
 
 # Calculate percent change compared to the O3 optimization level
 df_opt = df.div(df['O3'], axis=0) - 1
-
-# Calculate min and max performance improvement for each model
 min_improvement = df_opt.iloc[:, :-4].min() * 100
 max_improvement = df_opt.iloc[:, :-4].max() * 100
-
-# Create a new DataFrame for the min and max improvement
 df_min_max_improvement = pd.DataFrame({'Min': min_improvement, 'Max': max_improvement})
-
-# Plot with ML models as x-axis for min and max performance improvement
 plt.figure(figsize=figsize)  # Use the figure size variable
 ax = df_min_max_improvement.plot(kind='bar')
 plt.xlabel('ML Models')
@@ -197,4 +190,19 @@ plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
 plt.gca().yaxis.set_minor_locator(mtick.AutoMinorLocator())
 plt.savefig('../figures/Min_Max_Models_Improvement_O3.png', bbox_inches='tight')
+plt.close()
+
+# Calculate mean and median performance improvement for each test file
+mean_improvement = df_opt.iloc[:, :-4].mean(axis=1) * 100
+median_improvement = df_opt.iloc[:, :-4].median(axis=1) * 100
+df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
+plt.figure(figsize=figsize)  # Use the figure size variable
+ax = df_improvement.plot(kind='bar')
+plt.xlabel('Test Files')
+plt.ylabel('Performance Improvement (%)')
+plt.title('Mean and Median Performance Improvement of Test Files Over O3')
+plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
+plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
+plt.gca().yaxis.set_minor_locator(mtick.AutoMinorLocator())
+plt.savefig('../figures/TestFiles_Improvement_O3.png', bbox_inches='tight')
 plt.close()
