@@ -65,21 +65,4 @@ for opt_level in optimization_levels:
     # Create a new DataFrame for the mean and median improvement
     df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
 
-    # Plot with ML models as x-axis for mean and median performance improvement
-    plt.figure(figsize=figsize)  # Use the figure size variable
-    df_improvement.plot(kind='bar')
-    plt.xlabel('ML Models')
-    plt.ylabel('Performance Improvement (%)')
-    plt.title(f'Mean and Median Performance Improvement of ML Models Over {opt_level}')
-    plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter()) # Add percent sign to y-axis
-    plt.gca().yaxis.set_minor_locator(mtick.AutoMinorLocator()) # Add minor ticks without labels
-    #plt.grid(True, which='major', axis='y', linestyle='-', color='gray')
-    #plt.gca().set_axisbelow(True)
-    plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5)) # Move legend outside of plot
-    plt.savefig(f'../figures/Total_Models_Improvement_{opt_level}.png', bbox_inches='tight')
-    plt.close() # Close the figure to save memory
-    # Save the DataFrame as a Markdown table in a separate file (need pip3 install tabulate)
-    with open(f'../figures/Total_Models_Improvement_{opt_level}.md', 'w') as md_file:
-        md_file.write(df_improvement.to_markdown())
-
     

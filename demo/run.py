@@ -50,7 +50,7 @@ def clean():
         except:
             shutil.rmtree(file)
         finally:
-            return
+            continue
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
