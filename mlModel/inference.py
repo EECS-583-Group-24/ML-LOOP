@@ -18,7 +18,7 @@ model_output='./predictions.csv'
 '''
 '''Times executation of n runs and returns average'''
 def run_time_executable(executable,n):
-    times = []
+    '''times = []
     for _ in range(n):
         start_time = timeit.default_timer()
         subprocess.run([executable])  # Execute the generated executable
@@ -26,6 +26,8 @@ def run_time_executable(executable,n):
         times.append(execution_time)
         median_time = statistics.median(times)
     return median_time
+    '''
+    return timeit.timeit(stmt = f"subprocess.call([\'{executable}\'],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)", setup = "import subprocess", number=n)
 '''Generates llvm_ir and output directory from c file'''
 def generate_bytecode(test_directory, filename):
     # Create a directory based on the input file name
@@ -91,10 +93,10 @@ def profile(test_directory, n):
         for row in reader:
             filename = row[0]
             filenames.append(filename)
-            times=[filename]
+            times=[]
             # Profile each optimization sequence
             llvm_ir,output_dir=generate_bytecode(test_directory,filename)
-
+            print(f'Testing {filename} ...')
             for model_name, opt_sequence_number in zip(headers[1:], row[1:]):
                 opt_sequence = optimization_permutations[int(opt_sequence_number)]
                 times.append(compile_test_file_with_optimization(output_dir,llvm_ir, opt_sequence,n))
@@ -124,8 +126,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-<<<<<<< Updated upstream
-    profile('../files/test',10)
-=======
-    profile('../files/test',250)
->>>>>>> Stashed changes
+    profile('../files/test',25)
