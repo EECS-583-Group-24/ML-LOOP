@@ -1,7 +1,7 @@
 import os
 import subprocess
 import argparse
-
+import shutil
 # Directory path to featurePass
 directory_path = os.path.join(os.path.dirname(__file__), '../featurePass/build/')
 test_files='../test'
@@ -41,6 +41,13 @@ def profiling():
 def visualize():
     print("Visualizing Results ...")
     subprocess.run(['python3', 'visualization_demo.py'], cwd="./scripts")
+def clean():
+    files=["./results_percentages.csv","./predictions.csv","./test/test_features.csv","./scripts/temp","./scripts/results.csv","./figures","./feature_extraction/temp"]
+    for file in files:
+        try: 
+            os.remove(file)
+        except:
+            shutil.rmtree(file)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -50,6 +57,7 @@ if __name__ == "__main__":
     parser.add_argument('--visual',default=False, action='store_true',help="create visuals of results")
     parser.add_argument('--batch',default=False, action='store_true',help="run end to end process")
     parser.add_argument('--verbose',default=False, action='store_true',help="makes processes output messages")
+    parser.add_argument('--clean',default=False, action='store_true',help="clean demo folder")
     args = parser.parse_args()
     verbose=args.verbose
     if args.feature :
@@ -65,4 +73,6 @@ if __name__ == "__main__":
         model_inference()
         profiling()
         visualize()
+    elif args.clean:
+        clean()
     

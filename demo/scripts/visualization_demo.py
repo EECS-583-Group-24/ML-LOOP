@@ -4,7 +4,7 @@ import os
 import matplotlib.ticker as mtick
 import subprocess
 import glob
-
+os.makedirs("../figures",exist_ok=True)
 # Read the CSV file
 path = os.path.join(os.getcwd(), 'results.csv')
 df = pd.read_csv(path)
