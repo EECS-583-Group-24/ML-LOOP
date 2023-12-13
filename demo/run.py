@@ -4,9 +4,10 @@ import argparse
 import shutil
 # Directory path to featurePass
 directory_path = os.path.join(os.path.dirname(__file__), '../featurePass/build/')
-test_files='../test'
+test_files='../test_files'
 temp_dir='./temp/'
 output_dir='..'
+features_dir='../test_files/test_features.csv'
 training_output='./best_optimization_results.csv'
 ml_model='./mlModel/'
 
@@ -28,26 +29,28 @@ def call(args,loc):
 def feature_extraction():
     print("Extracting Features ...")
     subprocess.run(['python3', 'collectFeatures.py', 'test', test_files],cwd="./feature_extraction")
-    subprocess.run(['python3', 'combineFeatures.py','test',output_dir+'/test/test_features.csv'],cwd="./feature_extraction")
+    subprocess.run(['python3', 'combineFeatures.py','test',features_dir],cwd="./feature_extraction")
 
 def model_inference():
     print("Running Model ...")
-    subprocess.run(['python3', 'multiModel.py'], cwd="./scripts")
+    subprocess.run(['python3', 'multiModel.py', '--test',features_dir], cwd="./scripts")
 
 def profiling():
     print("Profiling Predictions ...")
-    subprocess.run(['python3', 'inference.py'], cwd="./scripts")
+    subprocess.run(['python3', 'inference.py', test_files], cwd="./scripts")
 
 def visualize():
     print("Visualizing Results ...")
     subprocess.run(['python3', 'visualization_demo.py'], cwd="./scripts")
 def clean():
-    files=["./results_percentages.csv","./predictions.csv","./test/test_features.csv","./scripts/temp","./scripts/results.csv","./figures","./feature_extraction/temp"]
+    files=["./results_percentages.csv","./predictions.csv",test_files+"/test_features.csv","./scripts/temp","./scripts/results.csv","./figures","./feature_extraction/temp"]
     for file in files:
         try: 
             os.remove(file)
         except:
             shutil.rmtree(file)
+        finally:
+            return
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -66,6 +69,7 @@ if __name__ == "__main__":
         model_inference()
     elif args.profile:
         profiling()
+        visualize()
     elif args.visual:
         visualize()
     elif args.batch:

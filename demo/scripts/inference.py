@@ -122,6 +122,6 @@ def generate_stats(output):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
-    #parser.add_argument('test_files',help="realtive path to test directory")
+    parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../test',1000)
+    profile(args.test_files,1000)
