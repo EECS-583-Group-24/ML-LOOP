@@ -21,9 +21,9 @@ plt.xlabel('Filenames')
 plt.ylabel('Raw Times')
 plt.title('Raw Times of Files')
 plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-plt.savefig('./figures/BarGraph_Files_RawTimes.png', bbox_inches='tight')
+plt.savefig('../figures/BarGraph_Files_RawTimes.png', bbox_inches='tight')
 plt.close()
-with open('./figures/BarGraph_Files_RawTimes.md', 'w') as md_file:
+with open('../figures/BarGraph_Files_RawTimes.md', 'w') as md_file:
     md_file.write(df.to_markdown())
 
 # Calculate percent change compared to O0, O1, O2, O3 times
@@ -56,9 +56,9 @@ for opt_level in optimization_levels:
     plt.title(f'Performance Improvement of Files Over {opt_level}')
     plt.gca().yaxis.set_major_formatter(mtick.PercentFormatter())
     plt.legend(loc='center left', bbox_to_anchor=(1.0, 0.5))
-    plt.savefig(f'./figures/BarGraph_Files_{opt_level}.png', bbox_inches='tight')
+    plt.savefig(f'../figures/BarGraph_Files_{opt_level}.png', bbox_inches='tight')
     plt.close()
-    with open(f'./figures/BarGraph_Files_{opt_level}.md', 'w') as md_file:
+    with open(f'../figures/BarGraph_Files_{opt_level}.md', 'w') as md_file:
         md_file.write(df_o3.to_markdown())
 
     

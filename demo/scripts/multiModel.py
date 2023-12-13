@@ -96,9 +96,9 @@ def run_models():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
-    parser.add_argument('--training',default='./training/training.csv',help="realtive path to training file directory")
-    parser.add_argument('--output',default='predictions.csv',help="realtive path to output file directory")
-    parser.add_argument('--test',default='./test/recursive_features.csv',help="realtive path to test files directory")
+    parser.add_argument('--training',default='../training/training.csv',help="realtive path to training file directory")
+    parser.add_argument('--output',default='../predictions.csv',help="realtive path to output file directory")
+    parser.add_argument('--test',default='../test/test_features.csv',help="realtive path to test files directory")
     args = parser.parse_args()
     training_file=args.training
     output_file=args.output

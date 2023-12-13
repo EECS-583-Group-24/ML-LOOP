@@ -8,11 +8,9 @@ import statistics
     SETUP PARAMETERS
 '''
 collect_features_script='../scripts/collectFeatures.py'
-output_dir='.'
-model='./multiModel.py'
-training_data='./training.csv'
-optimization_permutations_source='./training/optimization_permutations.txt'
-model_output='./predictions.csv'
+output_directory_loc='../'
+model_output="../predictions.csv"
+optimization_permutations_source='../training/optimization_permutations.txt'
 '''
     FUNCTION TO GENERATE COMPILED CODE
 '''
@@ -63,18 +61,7 @@ def compile_test_file_with_optimization_level(output_dir,bytecode, optimization_
     subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
 
     return run_time_executable(executable_file,n) 
-'''
-    FUNCTIONS FOR FUNCTIONALITY
-'''
-def generate_features_directory(test_files):
-    subprocess.run(['python3', collect_features_script, 'test', test_files])
-    subprocess.run(['python3', 'combineFeatures.py','test',output_dir+'/test.csv'])
-    return
-def process_dataset():
-    return
-def run_inference():
-    subprocess.run(['python3', model, training_data, 'p'])
-    return 
+
 
 '''Takes model inference and profiles output from each model and each file relative to O3'''
 def profile(test_directory, n):
@@ -118,7 +105,7 @@ def profile(test_directory, n):
         for i, out in enumerate(output):
             out.insert(0,filenames[i])
             writer.writerow(out)
-    with open('results_percentages.csv', 'w', newline='') as csvfile:
+    with open(output_directory_loc+'results_percentages.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow(['Filename'] + headers[1:] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
         for i, out in enumerate(percentages):
@@ -137,4 +124,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('./test',1000)
+    profile('../test',1000)
