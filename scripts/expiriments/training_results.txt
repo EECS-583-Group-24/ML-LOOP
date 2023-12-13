@@ -1,2 +1,3 @@
-Random: 0.4
-Running strating from 120, splitting by 2, increasing run count on each split by 2: 4.242%
+Random: 0.4% time= 4 seconds
+Running strating from 120, splitting by 2, increasing run count on each split by 2: 4.242% time=15 minutes
+Running from 120, running 6 times each, 4.246% time=8 minutes

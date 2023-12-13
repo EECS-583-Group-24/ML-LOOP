@@ -59,7 +59,7 @@ def createDataset(directory,d,start):
 
     # Get Best Optimization Patterns for each test case
     for input_file in test_files:
-        opts=random.sample(optimization_permutations,k=start)
+        opts=optimization_permutations#random.sample(optimization_permutations,k=start)
         # Create a directory based on the input file name
         print(f'Testing {input_file} ...')
         output_dir = os.path.join("output", os.path.splitext(input_file)[0])
@@ -70,11 +70,12 @@ def createDataset(directory,d,start):
             times=[]
             with Pool() as pool:
             # call the same function with different data in parallel
-                for result in pool.starmap(compile_test_file_with_optimization, zip(repeat(input_file),opts,repeat(test_directory),range(len(opts)),repeat(non_optimized_file),repeat(output_dir),repeat(math.ceil(start/len(opts))))):
+                for result in pool.starmap(compile_test_file_with_optimization, zip(repeat(input_file),opts,repeat(test_directory),range(len(opts)),repeat(non_optimized_file),repeat(output_dir),repeat(1))):
                     times.append(result)
             
             #times.sort()
             best_times=heapq.nsmallest(max(math.floor(len(times)/d),1),times)
+            break
             opts=[x[1] for x in best_times]
         if(store_size==1):
             results.append([input_file, 'NaN',optimization_permutations.index(opts[0])])
@@ -93,7 +94,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     #Setup
     parser.add_argument('training_dir',help="realtive path to test directory")
-    parser.add_argument('-d',required=False,type=int,default=2,help="Shrink factor (larger=quicker), must be greater than 1")
+    parser.add_argument('-d',required=False,type=int,default=120,help="Shrink factor (larger=quicker), must be greater than 1")
     parser.add_argument('--start',required=False,type=int,default=120,help="Start Size")
     args = parser.parse_args()
     createDataset(args.training_dir,args.d,args.start)
