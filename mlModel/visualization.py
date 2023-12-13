@@ -205,9 +205,9 @@ for opt_level in optimization_levels:
 
 
 # Calculate percent change compared to the O3 optimization level
-df_opt = df.div(df['O3'], axis=0) - 1
-min_improvement = df_opt.iloc[:, :-4].min() * -100
-max_improvement = df_opt.iloc[:, :-4].max() * -100
+df_opt = (df.div(df['O3'], axis=0) - 1)*-1
+min_improvement = df_opt.iloc[:, :-4].min() * 100
+max_improvement = df_opt.iloc[:, :-4].max() * 100
 df_min_max_improvement = pd.DataFrame({'Min': min_improvement, 'Max': max_improvement})
 plt.figure(figsize=figsize)  # Use the figure size variable
 ax = df_min_max_improvement.plot(kind='bar')
