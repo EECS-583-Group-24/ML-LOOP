@@ -1,5 +1,6 @@
 import os
 import subprocess
+import argparse
 
 # Directory path to featurePass
 directory_path = os.path.join(os.path.dirname(__file__), '../featurePass/build/')
@@ -18,7 +19,7 @@ subprocess.run(['pip3', 'install', '-r', '../requirements.txt'])
 if not os.path.exists(directory_path):
     os.makedirs(directory_path)
 '''
-bool verbose=False
+verbose=False
 def call(args,loc):
     if verbose:
         subprocess.run(args,cwd=loc)
@@ -50,7 +51,7 @@ if __name__ == "__main__":
     parser.add_argument('--batch',default=False, action='store_true',help="run end to end process")
     parser.add_argument('--verbose',default=False, action='store_true',help="makes processes output messages")
     args = parser.parse_args()
-    verbose=args.verbose()
+    verbose=args.verbose
     if args.feature :
         feature_extraction()
     elif args.inference:
@@ -58,10 +59,10 @@ if __name__ == "__main__":
     elif args.profile:
         profiling()
     elif args.visual:
-        visual()
+        visualize()
     elif args.batch:
         feature_extraction()
         model_inference()
         profiling()
-        visual()
+        visualize()
     
