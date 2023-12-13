@@ -39,7 +39,7 @@ with open('../figures/BarGraph_Models_RawTimes.md', 'w') as md_file:
 
 # Calculate percent change compared to O3 times
 plt.figure(figsize=figsize)  # Use the figure size variable
-df_o3 = (df.div(df['O3'], axis=0) - 1) * 100
+df_o3 = (df.div(df['O3'], axis=0) - 1) * -100
 df_o3.plot(kind='bar')
 plt.xlabel('Filenames')
 plt.ylabel('Performance Improvement (%)')
@@ -66,7 +66,7 @@ with open('../figures/BarGraph_Models_O3.md', 'w') as md_file:
 
 # Calculate percent change compared to O2 times
 plt.figure(figsize=figsize)  # Use the figure size variable
-df_o2 = (df.div(df['O2'], axis=0) -1) * 100
+df_o2 = (df.div(df['O2'], axis=0) -1) * -100
 df_o2.plot(kind='bar')
 plt.xlabel('Filenames')
 plt.ylabel('Performance Improvement (%)')
@@ -93,7 +93,7 @@ with open('../figures/BarGraph_Models_O2.md', 'w') as md_file:
 
 # Calculate percent change compared to O1 times
 plt.figure(figsize=figsize)  # Use the figure size variable
-df_o1 = (df.div(df['O1'], axis=0) -1) * 100
+df_o1 = (df.div(df['O1'], axis=0) -1) * -100
 df_o1.plot(kind='bar')
 plt.xlabel('Filenames')
 plt.ylabel('Performance Improvement (%)')
@@ -120,7 +120,7 @@ with open('../figures/BarGraph_Models_O1.md', 'w') as md_file:
 
 # Calculate percent change compared to O0 times
 plt.figure(figsize=figsize)  # Use the figure size variable
-df_o0 = (df.div(df['O0'], axis=0) -1) * 100
+df_o0 = (df.div(df['O0'], axis=0) -1) * -100
 df_o0.plot(kind='bar')
 plt.xlabel('Filenames')
 plt.ylabel('Performance Improvement (%)')
@@ -150,8 +150,8 @@ df_o0_o3 = df.div(df[['O0', 'O1', 'O2', 'O3']].mean(axis=1), axis=0) - 1
 
 # Calculate mean and median performance improvement for each model
 # Remove the last 4 colums (O0, O1, O2, O3)
-mean_improvement = df_o0_o3.iloc[:, :-4].mean() * 100
-median_improvement = df_o0_o3.iloc[:, :-4].median() * 100
+mean_improvement = df_o0_o3.iloc[:, :-4].mean() * -100
+median_improvement = df_o0_o3.iloc[:, :-4].median() * -100
 
 # Create a new DataFrame for the mean and median improvement
 df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
@@ -180,8 +180,8 @@ for opt_level in optimization_levels:
     
     # Remove the optimization level column (O0, O1, O2, O3)
     # Calculate mean and median performance improvement for each model
-    mean_improvement = df_opt.iloc[:, :-4].mean() * 100
-    median_improvement = df_opt.iloc[:, :-4].median() * 100
+    mean_improvement = df_opt.iloc[:, :-4].mean() * -100
+    median_improvement = df_opt.iloc[:, :-4].median() * -100
 
     # Create a new DataFrame for the mean and median improvement
     df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
@@ -206,8 +206,8 @@ for opt_level in optimization_levels:
 
 # Calculate percent change compared to the O3 optimization level
 df_opt = df.div(df['O3'], axis=0) - 1
-min_improvement = df_opt.iloc[:, :-4].min() * 100
-max_improvement = df_opt.iloc[:, :-4].max() * 100
+min_improvement = df_opt.iloc[:, :-4].min() * -100
+max_improvement = df_opt.iloc[:, :-4].max() * -100
 df_min_max_improvement = pd.DataFrame({'Min': min_improvement, 'Max': max_improvement})
 plt.figure(figsize=figsize)  # Use the figure size variable
 ax = df_min_max_improvement.plot(kind='bar')
@@ -223,8 +223,8 @@ with open('../figures/Min_Max_Models_Improvement_O3.md', 'w') as md_file:
     md_file.write(df_min_max_improvement.to_markdown())
 
 # Calculate mean and median performance improvement for each test file
-mean_improvement = df_opt.iloc[:, :-4].mean(axis=1) * 100
-median_improvement = df_opt.iloc[:, :-4].median(axis=1) * 100
+mean_improvement = df_opt.iloc[:, :-4].mean(axis=1) * -100
+median_improvement = df_opt.iloc[:, :-4].median(axis=1) * -100
 df_improvement = pd.DataFrame({'Mean': mean_improvement, 'Median': median_improvement})
 plt.figure(figsize=figsize)  # Use the figure size variable
 ax = df_improvement.plot(kind='bar')
