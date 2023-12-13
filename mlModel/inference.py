@@ -35,7 +35,7 @@ def generate_bytecode(test_directory, filename):
     os.makedirs(output_dir, exist_ok=True)
     
     llvm_ir = os.path.join(output_dir, f"{os.path.splitext(filename)[0]}_0_non_optimized.ll")
-    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, filename)} -o {llvm_ir}", shell=True)
+    subprocess.run(f"clang -S -emit-llvm {os.path.join(test_directory, filename)} -o {llvm_ir}", shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     return llvm_ir,output_dir
 
 '''Compiles and tests files with a optimization sequence'''
@@ -47,8 +47,8 @@ def compile_test_file_with_optimization(output_dir, bytecode, opt_sequence,n):
     executable_file = os.path.join(output_dir, "exec")
 
     # Execute the opt command and place the output file in the directory
-    subprocess.run(f"opt {opt_flags} {bytecode} -o {optimized_file}", shell=True)
-    subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True)
+    subprocess.run(f"opt {opt_flags} {bytecode} -o {optimized_file}", shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
+    subprocess.run(f"clang {optimized_file} -o {executable_file}", shell=True,stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
     
     # Measure execution time of the executable
     return run_time_executable(executable_file,n)
@@ -86,6 +86,7 @@ def profile(test_directory, n):
             optimization_permutations.append(row)
     #Gathers performance Output
     output=[]
+    percentages=[]
     filenames=[]                   
     with open(model_output, newline='') as csvfile:
         reader = csv.reader(csvfile)
@@ -103,12 +104,13 @@ def profile(test_directory, n):
             # Iterate from 0-3 for optimization levels
             for i in range(4):
                 times.append(compile_test_file_with_optimization_level(output_dir,llvm_ir, i,n))
-            
-            # #Convert to percentage
-            # percent=[t/times[-1] for t in times[1:]]
-            # output.append(percent)
+            O3=times[-1]
+            run_times=times[0:-3]
+            percentages.append([(O3-time)/O3 for time in times])
             output.append(times)
-    
+    #O3=[output[t][-1] for t in output]
+    transposed =[[row[i] for row in percentages] for i in range(len(percentages[0]))]
+    print([statistics.median(transpose) for transpose in transposed])
     #Print Results
     with open('results.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -116,8 +118,17 @@ def profile(test_directory, n):
         for i, out in enumerate(output):
             out.insert(0,filenames[i])
             writer.writerow(out)
+    with open('results_percentages.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['Filename'] + headers[1:] + ['O0'] + ['O1'] + ['O2'] + ['O3'])  # Write header row
+        for i, out in enumerate(percentages):
+            out.insert(0,filenames[i])
+            writer.writerow(out)
 
     return 
+def generate_stats(output):
+    transposed =[[row[i] for row in output] for i in range(len(output[0]))]
+
 '''
     COMMAND LINE INPUTS
 '''
@@ -126,4 +137,4 @@ if __name__ == "__main__":
     #Setup
     #parser.add_argument('test_files',help="realtive path to test directory")
     args = parser.parse_args()
-    profile('../files/test',25)
+    profile('../files/test',1000)
