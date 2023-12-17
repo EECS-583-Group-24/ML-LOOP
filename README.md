@@ -15,7 +15,15 @@ For a quick setup, follow these steps:
       - real    9m 12.976s
       - user    24m 33.383s
       - sys     21m 30.435s
-
+## Running Demo
+We created a demo folder (/demo) to highlight the functionality of our current models and workflows. This demo assumes that training is complete and collected within the /demo/training_files folder. The scripts and other functionality is then locally stored within this folder. Inference is run on all programs that are collected within the ./tests folder. This demo has a run.py interface at the top level of the demo folder that provides a variety of commands to run each step of the model inference process, from feature collection, inference, profiling and visualization. Each of these steps can be performed in order, or can be run together as the batch command. Please refer to the command line help for more information. 
+```
+cd ./demo //Run all commands wihtin the /demo directory
+python3 run.py features //collect features of test dataset
+python3 run.py inference //run inference on features
+python3 run.py profile // profile results against O3
+python3 run.py visualize //generate graphs and other visualization tools
+```
 ## Detailed Instructions: Manual Setup
 
 ### Step 1: Build the Feature Passes
