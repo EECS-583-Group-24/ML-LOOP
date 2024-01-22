@@ -1,4 +1,12 @@
 # ML-LOOP: Optimizing LLVM with Machine Learning
+![GitHub stars](https://img.shields.io/github/stars/EECS-583-Group-24/ML-LOOP?style=social)
+![GitHub forks](https://img.shields.io/github/forks/EECS-583-Group-24/ML-LOOP?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/EECS-583-Group-24/ML-LOOP?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/EECS-583-Group-24/ML-LOOP)
+![GitHub language count](https://img.shields.io/github/languages/count/EECS-583-Group-24/ML-LOOP)
+![GitHub top language](https://img.shields.io/github/languages/top/EECS-583-Group-24/ML-LOOP)
+![GitHub last commit](https://img.shields.io/github/last-commit/EECS-583-Group-24/ML-LOOP?color=red)
+
 Leverage machine learning to dynamically predict and apply optimization pass sequences in LLVM. 
 ![alt text](https://github.com/EECS-583-Group-24/ML-LOOP/blob/main/figures/Total_Models_Improvement_O3.png)
 ## Project Overview
